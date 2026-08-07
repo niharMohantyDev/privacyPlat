@@ -1,0 +1,14 @@
+services:
+  # Postgres is NOT containerized here — this project uses the existing
+  # native PostgreSQL 15 install already running on the host (port 5432).
+  # See backend/.env for the connection string.
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5

@@ -1,0 +1,118 @@
+PRIVACY PLATFORM — TECH STACK & SETUP CHECKLIST (Phase 0: Foundation)
+======================================================================
+
+Dev environment already detected on this machine:
+  Node    v22.23.2
+  npm     11.4.1
+  Python  3.11.4
+  Docker  29.6.2
+  (no local psql client found — not needed, Postgres will run via Docker)
+
+
+1. CONFIRMED BY YOU
+----------------------------------------------------------------------
+  Frontend  : React + TypeScript
+  Backend   : Django
+  Database  : PostgreSQL
+
+
+2. DECIDED FOR YOU (with reasoning)
+----------------------------------------------------------------------
+
+FRONTEND
+  - Vite                          Build tool / dev server. Fast HMR, current
+                                   standard for React+TS.
+  - React Router v6                Client-side routing.
+  - TanStack Query                 Server-state / data-fetching / caching
+                                   against the Django API.
+  - Axios                          HTTP client, with interceptors for auth
+                                   token attach + refresh.
+  - Tailwind CSS + shadcn/ui       Styling + components. Fast to build the
+                                   many admin/dashboard screens this product
+                                   needs (RoPA tables, DSAR queues, vendor
+                                   lists, risk registers) without locking
+                                   into a heavy component-library runtime.
+  - React Hook Form + Zod          Forms + schema validation.
+  - Vitest + React Testing Library Unit / component testing.
+  - ESLint + Prettier              Linting / formatting.
+  - npm                            Package manager (already installed).
+
+BACKEND
+  - Django 5.x + Django REST Framework   API layer.
+  - psycopg (v3)                          Postgres driver.
+  - djangorestframework-simplejwt         JWT auth for the MVP. SSO/SAML
+                                           added later per the roadmap once
+                                           an enterprise customer needs it —
+                                           heavier lift, not worth doing day 1.
+  - django-environ                        .env-based settings/config.
+  - django-cors-headers                   CORS, since frontend and backend
+                                           are separate origins in dev.
+  - Celery + Redis                        Background jobs + retry/backoff.
+                                           Needed now for the notification
+                                           service skeleton, and later for
+                                           cookie/tracker scanning jobs,
+                                           retention/deletion jobs, etc.
+  - drf-spectacular                       Auto-generated OpenAPI schema —
+                                           sets up the Phase 7 public
+                                           API/SDK story early instead of
+                                           retrofitting it.
+  - pytest-django + factory_boy           Testing.
+  - requirements.txt + venv               Dependency management (simplest,
+                                           nothing extra to install).
+
+DATABASE
+  - PostgreSQL, run via Docker Compose for local dev (isolated, no manual
+    install, matches how it'll run in prod).
+  - UUIDs as primary keys across the platform (safer than auto-increment
+    IDs in a multi-tenant system).
+
+INFRA / DEV ENVIRONMENT
+  - Docker Compose: postgres + redis + backend.
+    (frontend runs natively via `npm run dev` for the fastest hot-reload
+    experience — not containerized in dev)
+  - Monorepo layout inside this repo:
+      /backend
+      /frontend
+  - .env.example files committed; real .env files gitignored.
+  - Backend Django app layout (per the roadmap's Phase 0 scope):
+      apps/core           Organization / Workspace / Asset / User / Role
+      apps/auditlog        Immutable audit event log
+      apps/notifications   Email / webhook dispatch
+
+
+3. WHAT I NEED FROM YOU
+----------------------------------------------------------------------
+  [ ] 1. Postgres — do you already have a specific instance (cloud-hosted,
+         e.g. RDS / Supabase / Neon / Azure) you want wired up now, or
+         should I default to a Dockerized local Postgres for dev (I'll
+         generate throwaway dev credentials; you provide real ones for
+         staging/prod later)?
+
+         IMPORTANT: if you have real credentials, do NOT paste them into
+         chat. Once the backend is scaffolded there will be a gitignored
+         .env file — put the values in there directly, or tell me and
+         I'll leave clearly-marked placeholders for you to fill in.
+
+  [ ] 2. Any existing brand direction for the frontend (colors, logo)? Or
+         is a neutral placeholder theme fine to start with?
+
+  [ ] 3. Confirm Python 3.11 (already installed) is fine, or tell me if
+         you need a different version.
+
+  [ ] 4. Confirm Node 22 (already installed) is fine for Vite/React.
+
+  [ ] 5. SSO (SAML/OIDC) now, or JWT email/password for the MVP with SSO
+         added later once an enterprise customer needs it? Recommend
+         deferring — it's a heavier lift than the MVP needs.
+
+
+4. IMMEDIATE NEXT STEPS
+----------------------------------------------------------------------
+  - Branch: feature/phase-0-foundation, off dev
+  - Scaffold /backend  (Django + DRF + apps/core, apps/auditlog,
+    apps/notifications)
+  - Scaffold /frontend (Vite + React + TypeScript)
+  - docker-compose.yml for postgres + redis
+  - .env.example for both frontend and backend
+  - Wire up the Organization/Workspace/Asset/User/Role model (Phase 0
+    tenancy) and the audit-log middleware
