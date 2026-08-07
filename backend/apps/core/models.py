@@ -1,7 +1,18 @@
+import secrets
 import uuid
 
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+
+
+def generate_asset_public_key() -> str:
+    """
+    A non-secret identifier safe to embed in client-side JS (comparable to
+    a Google reCAPTCHA site key) — anonymous browsers can't hold secrets,
+    so the defense for the public consent-ingestion endpoint is throttling
+    and asset.is_active revocation, not key secrecy.
+    """
+    return secrets.token_urlsafe(24)
 
 
 class BaseModel(models.Model):
@@ -107,6 +118,16 @@ class Asset(BaseModel):
         max_length=255,
         blank=True,
         help_text="Domain, bundle ID, or connection identifier depending on asset_type.",
+    )
+    public_key = models.CharField(
+        max_length=64,
+        unique=True,
+        default=generate_asset_public_key,
+        editable=False,
+        help_text="Non-secret identifier embedded in the client-side consent SDK.",
+    )
+    is_active = models.BooleanField(
+        default=True, help_text="Set false to revoke this asset's public_key immediately."
     )
 
     def __str__(self):

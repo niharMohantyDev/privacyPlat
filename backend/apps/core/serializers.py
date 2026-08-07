@@ -20,8 +20,17 @@ class WorkspaceSerializer(serializers.ModelSerializer):
 class AssetSerializer(serializers.ModelSerializer):
     class Meta:
         model = Asset
-        fields = ["id", "workspace", "asset_type", "name", "identifier", "created_at"]
-        read_only_fields = ["id", "created_at"]
+        fields = [
+            "id",
+            "workspace",
+            "asset_type",
+            "name",
+            "identifier",
+            "public_key",
+            "is_active",
+            "created_at",
+        ]
+        read_only_fields = ["id", "public_key", "created_at"]
 
 
 class OrganizationMembershipSerializer(serializers.ModelSerializer):

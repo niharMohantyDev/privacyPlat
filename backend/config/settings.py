@@ -128,6 +128,13 @@ REST_FRAMEWORK = {
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
     "PAGE_SIZE": 25,
+    "DEFAULT_THROTTLE_RATES": {
+        # Public, unauthenticated endpoints (e.g. consent ingestion from
+        # the embeddable browser SDK) get their own scope rather than
+        # sharing DRF's blanket 'anon' bucket, so future public endpoints
+        # can be tuned independently.
+        "consent_public": env("CONSENT_PUBLIC_THROTTLE_RATE", default="60/min"),
+    },
 }
 
 SIMPLE_JWT = {

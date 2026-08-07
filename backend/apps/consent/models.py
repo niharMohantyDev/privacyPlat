@@ -18,6 +18,7 @@ class Purpose(BaseModel):
     )
 
     class Meta:
+        ordering = ["code"]
         constraints = [
             models.UniqueConstraint(
                 fields=["organization", "code"], name="unique_purpose_code_per_org"
