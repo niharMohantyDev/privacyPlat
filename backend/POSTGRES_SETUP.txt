@@ -1,0 +1,24 @@
+Using your existing native PostgreSQL 15 install (port 5432) instead of Docker.
+
+1. Open a terminal and connect as the postgres superuser:
+
+   "C:\Program Files\PostgreSQL\15\bin\psql.exe" -U postgres
+
+   (it will prompt for the postgres superuser password you set at install time)
+
+2. Create a database and a dedicated app user/role (pick your own password):
+
+   CREATE DATABASE privacyplat;
+   CREATE USER privacyplat WITH PASSWORD 'choose-a-strong-password';
+   GRANT ALL PRIVILEGES ON DATABASE privacyplat TO privacyplat;
+   ALTER DATABASE privacyplat OWNER TO privacyplat;
+   \q
+
+3. Edit backend/.env yourself (this file is gitignored, never commit it) and
+   set DATABASE_URL to match what you just created:
+
+   DATABASE_URL=postgres://privacyplat:choose-a-strong-password@localhost:5432/privacyplat
+
+   Don't paste the real password back into chat — just edit the file directly.
+
+4. Tell me when it's done and I'll run the Django migrations against it.
