@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "apps.core",
     "apps.auditlog",
     "apps.notifications",
+    "apps.consent",
 ]
 
 MIDDLEWARE = [

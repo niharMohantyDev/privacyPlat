@@ -24,4 +24,5 @@ urlpatterns = [
         name="swagger-ui",
     ),
     path("api/", include("apps.core.urls")),
+    path("api/consent/", include("apps.consent.urls")),
 ]
