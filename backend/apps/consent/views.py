@@ -1,58 +1,62 @@
-from rest_framework.exceptions import PermissionDenied, ValidationError
+from rest_framework import viewsets
+from rest_framework.exceptions import ValidationError
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from apps.core.models import OrganizationMembership
+from apps.core.authorization import WRITE_ROLES, require_membership
 
 from .composition import build_consent_service
 from .models import Purpose
 from .serializers import (
     ConsentRecordSerializer,
     ConsentReceiptSerializer,
+    PurposeModelSerializer,
     RecordConsentRequestSerializer,
 )
 
 
-def _ensure_membership(request, organization_id):
-    """
-    Platform-side authorization: the caller must belong to the org they're
-    acting on. NOTE: this only covers platform-authenticated calls (staff
-    testing the API, an internal admin UI). The public-facing case — an
-    anonymous visitor's browser recording consent on a customer's own
-    website via an embeddable script — needs a separate, unauthenticated
-    ingestion path keyed by an Asset API key. That's out of scope for this
-    milestone and tracked as follow-up, not silently assumed done.
-    """
-    if not OrganizationMembership.objects.filter(
-        organization_id=organization_id, user=request.user
-    ).exists():
-        raise PermissionDenied("Not a member of this organization.")
+class PurposeViewSet(viewsets.ModelViewSet):
+    """Org-scoped purpose taxonomy. Reads: any member. Writes: WRITE_ROLES only."""
 
-
-class PurposeListView(APIView):
+    serializer_class = PurposeModelSerializer
     permission_classes = [IsAuthenticated]
 
-    def get(self, request):
-        organization_id = request.query_params.get("organization_id")
-        if not organization_id:
-            raise ValidationError({"organization_id": "This query parameter is required."})
-        _ensure_membership(request, organization_id)
+    def get_queryset(self):
+        return Purpose.objects.filter(organization__memberships__user=self.request.user)
 
-        purposes = Purpose.objects.filter(organization_id=organization_id).values(
-            "id", "code", "name", "description", "is_essential"
+    def perform_create(self, serializer):
+        organization = serializer.validated_data["organization"]
+        require_membership(self.request.user, organization.id, roles=WRITE_ROLES)
+        serializer.save()
+
+    def perform_update(self, serializer):
+        require_membership(
+            self.request.user, serializer.instance.organization_id, roles=WRITE_ROLES
         )
-        return Response(list(purposes))
+        serializer.save()
+
+    def perform_destroy(self, instance):
+        require_membership(self.request.user, instance.organization_id, roles=WRITE_ROLES)
+        instance.delete()
 
 
 class RecordConsentView(APIView):
+    """
+    Platform-authenticated consent recording — for internal tooling/admin
+    use and testing. The public-facing path (an anonymous website
+    visitor's browser, via the embeddable script) is
+    apps.consent.public_views.PublicRecordConsentView instead, since it
+    can't carry a platform JWT.
+    """
+
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
         organization_id = request.query_params.get("organization_id")
         if not organization_id:
             raise ValidationError({"organization_id": "This query parameter is required."})
-        _ensure_membership(request, organization_id)
+        require_membership(request.user, organization_id)
 
         body = RecordConsentRequestSerializer(data=request.data)
         body.is_valid(raise_exception=True)
@@ -77,7 +81,7 @@ class CurrentConsentView(APIView):
             raise ValidationError(
                 {"detail": "organization_id and subject_key query params are required."}
             )
-        _ensure_membership(request, organization_id)
+        require_membership(request.user, organization_id)
 
         service = build_consent_service()
         record = service.get_current_consent(
