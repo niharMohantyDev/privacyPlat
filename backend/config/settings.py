@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "apps.auditlog",
     "apps.notifications",
     "apps.consent",
+    "apps.rights",
 ]
 
 MIDDLEWARE = [
@@ -134,6 +135,7 @@ REST_FRAMEWORK = {
         # sharing DRF's blanket 'anon' bucket, so future public endpoints
         # can be tuned independently.
         "consent_public": env("CONSENT_PUBLIC_THROTTLE_RATE", default="60/min"),
+        "rights_public": env("RIGHTS_PUBLIC_THROTTLE_RATE", default="20/hour"),
     },
 }
 
