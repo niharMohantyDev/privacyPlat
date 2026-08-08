@@ -21,4 +21,15 @@ export class AuthApiClient implements IAuthApiClient {
     const response = await this.http.post<AuthTokens>('/api/token/', input)
     return response.data
   }
+
+  async refresh(refreshToken: string): Promise<AuthTokens> {
+    // SIMPLE_JWT has ROTATE_REFRESH_TOKENS on, so the response includes a
+    // new refresh token too — fall back to the one we sent only if a
+    // server config change ever turns rotation off.
+    const response = await this.http.post<{ access: string; refresh?: string }>(
+      '/api/token/refresh/',
+      { refresh: refreshToken },
+    )
+    return { access: response.data.access, refresh: response.data.refresh ?? refreshToken }
+  }
 }

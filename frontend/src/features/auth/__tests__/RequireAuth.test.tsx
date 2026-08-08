@@ -8,6 +8,7 @@ import type { TokenStorage } from '../storage/TokenStorage'
 function fakeStorage(accessToken: string | null): TokenStorage {
   return {
     getAccessToken: () => accessToken,
+    getRefreshToken: () => null,
     save: () => {},
     clear: () => {},
   }

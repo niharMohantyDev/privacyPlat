@@ -11,4 +11,5 @@ export interface AuthTokens {
 /** What useAuth depends on — AuthApiClient implements this. */
 export interface IAuthApiClient {
   login(input: LoginInput): Promise<AuthTokens>
+  refresh(refreshToken: string): Promise<AuthTokens>
 }
