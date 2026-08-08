@@ -29,4 +29,5 @@ urlpatterns = [
     path("api/", include("apps.cases.urls")),
     path("api/", include("apps.dashboard.urls")),
     path("api/", include("apps.ropa.urls")),
+    path("api/", include("apps.notices.urls")),
 ]

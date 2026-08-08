@@ -10,11 +10,13 @@ import { AdminConsentLogPage } from '@/pages/AdminConsentLogPage'
 import { AdminDashboardPage } from '@/pages/AdminDashboardPage'
 import { AdminPurposesPage } from '@/pages/AdminPurposesPage'
 import { AdminRequestsPage } from '@/pages/AdminRequestsPage'
+import { AdminNoticesPage } from '@/pages/AdminNoticesPage'
 import { AdminRopaPage } from '@/pages/AdminRopaPage'
 import { AdminWorkspacesPage } from '@/pages/AdminWorkspacesPage'
 import { DemoSitePage } from '@/pages/DemoSitePage'
 import { GrievancePortalPage } from '@/pages/GrievancePortalPage'
 import { LandingPage } from '@/pages/LandingPage'
+import { NoticePreviewPage } from '@/pages/NoticePreviewPage'
 import { PrivacyPolicyPage } from '@/pages/PrivacyPolicyPage'
 import { RightsPortalPage } from '@/pages/RightsPortalPage'
 import { TermsPage } from '@/pages/TermsPage'
@@ -40,6 +42,7 @@ export default function App() {
           <Route path="/demo" element={<DemoSitePage />} />
           <Route path="/rights" element={<RightsPortalPage />} />
           <Route path="/grievance" element={<GrievancePortalPage />} />
+          <Route path="/notice" element={<NoticePreviewPage />} />
           <Route path="/admin/login" element={<LoginPage />} />
           <Route
             path="/admin"
@@ -102,6 +105,14 @@ export default function App() {
             element={
               <AdminRoute>
                 <AdminRopaPage />
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="/admin/notices"
+            element={
+              <AdminRoute>
+                <AdminNoticesPage />
               </AdminRoute>
             }
           />

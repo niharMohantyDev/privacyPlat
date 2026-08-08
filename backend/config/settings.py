@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     "apps.cases",
     "apps.dashboard",
     "apps.ropa",
+    "apps.notices",
 ]
 
 MIDDLEWARE = [
@@ -141,6 +142,7 @@ REST_FRAMEWORK = {
         "consent_public": env("CONSENT_PUBLIC_THROTTLE_RATE", default="60/min"),
         "rights_public": env("RIGHTS_PUBLIC_THROTTLE_RATE", default="20/hour"),
         "cases_public": env("CASES_PUBLIC_THROTTLE_RATE", default="20/hour"),
+        "notices_public": env("NOTICES_PUBLIC_THROTTLE_RATE", default="60/min"),
     },
 }
 

@@ -13,6 +13,7 @@ import {
   LayersIcon,
   ListIcon,
   LogOutIcon,
+  MegaphoneIcon,
   ShieldIcon,
 } from './icons'
 import { Logo } from './Logo'
@@ -22,6 +23,7 @@ const NAV_ITEMS = [
   { to: '/admin/requests', label: 'DSAR Queue', icon: InboxIcon },
   { to: '/admin/cases', label: 'Cases', icon: ShieldIcon },
   { to: '/admin/ropa', label: 'RoPA', icon: BookIcon },
+  { to: '/admin/notices', label: 'Notices', icon: MegaphoneIcon },
   { to: '/admin/purposes', label: 'Purposes', icon: ListIcon },
   { to: '/admin/consent-log', label: 'Consent Log', icon: FileTextIcon },
   { to: '/admin/workspaces', label: 'Workspaces', icon: LayersIcon },
