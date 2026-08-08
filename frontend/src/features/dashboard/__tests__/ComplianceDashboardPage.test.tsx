@@ -18,20 +18,22 @@ function renderWithQueryClient(ui: React.ReactElement) {
 }
 
 describe('ComplianceDashboardPage', () => {
-  it('loads and displays metrics from all three pillars', async () => {
+  it('loads and displays KPI cards and chart sections from all three pillars', async () => {
     const client: IDashboardApiClient = { getSummary: vi.fn().mockResolvedValue(SUMMARY) }
 
     renderWithQueryClient(<ComplianceDashboardPage organizationId="org-1" client={client} />)
 
-    await screen.findByText('83.3%')
+    await screen.findByText('DSAR Resolution')
     expect(client.getSummary).toHaveBeenCalledWith('org-1')
-    expect(screen.getByText('Data Subject Requests')).toBeInTheDocument()
-    expect(screen.getByText('Breach & Grievance Cases')).toBeInTheDocument()
-    expect(screen.getByText('Consent')).toBeInTheDocument()
-    expect(screen.getByText('72.5%')).toBeInTheDocument()
+    expect(screen.getByText('Open Case Mix')).toBeInTheDocument()
+    expect(screen.getByText('Consent Opt-In Rate')).toBeInTheDocument()
+    expect(screen.getByText('Open Items: On Track vs Overdue')).toBeInTheDocument()
+    // 83.3% appears twice by design: the KPI card and the donut center label.
+    expect(screen.getAllByText('83.3%').length).toBeGreaterThan(0)
+    expect(screen.getAllByText('72.5%').length).toBeGreaterThan(0)
   })
 
-  it('shows a dash when a rate has no data yet', async () => {
+  it('shows a dash on the KPI card when a rate has no data yet', async () => {
     const emptySummary: ComplianceDashboardSummary = {
       ...SUMMARY,
       dsar: { ...SUMMARY.dsar, on_time_rate: null },
@@ -40,8 +42,20 @@ describe('ComplianceDashboardPage', () => {
 
     renderWithQueryClient(<ComplianceDashboardPage organizationId="org-1" client={client} />)
 
-    await screen.findByText('Data Subject Requests')
+    await screen.findByText('DSAR Resolution')
     expect(screen.getByText('—')).toBeInTheDocument()
+  })
+
+  it('shows an explicit empty state on a chart with no data', async () => {
+    const emptySummary: ComplianceDashboardSummary = {
+      ...SUMMARY,
+      cases: { total: 0, open: 0, overdue: 0, breach_open: 0, grievance_open: 0 },
+    }
+    const client: IDashboardApiClient = { getSummary: vi.fn().mockResolvedValue(emptySummary) }
+
+    renderWithQueryClient(<ComplianceDashboardPage organizationId="org-1" client={client} />)
+
+    await screen.findByText('No open cases.')
   })
 
   it('shows an error message when loading fails', async () => {
