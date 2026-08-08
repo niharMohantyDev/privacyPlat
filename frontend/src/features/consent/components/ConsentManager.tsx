@@ -34,16 +34,33 @@ export function ConsentManager({ publicKey, client, storage }: ConsentManagerPro
     return null
   }
 
+  // mutateAsync's returned promise rejects on failure. Each handler here
+  // is fired directly from onClick with nothing downstream to catch a
+  // rejection, so an uncaught network/API error becomes an unhandled
+  // promise rejection — a real bug, not just noisy tests. Catching and
+  // leaving the current view in place (rather than hiding the banner)
+  // is the correct fallback: the visitor should get another chance
+  // rather than silently losing their decision. submitError is already
+  // tracked reactively by useConsent if a future milestone wants to
+  // surface a message here.
   const handleAcceptAll = async () => {
     const decisions = Object.fromEntries(purposes.map((p) => [p.code, true]))
-    await submit(decisions)
-    setView('hidden')
+    try {
+      await submit(decisions)
+      setView('hidden')
+    } catch {
+      // stay on the banner; submitError is available via useConsent
+    }
   }
 
   const handleRejectAll = async () => {
     const decisions = Object.fromEntries(purposes.map((p) => [p.code, p.is_essential]))
-    await submit(decisions)
-    setView('hidden')
+    try {
+      await submit(decisions)
+      setView('hidden')
+    } catch {
+      // stay on the banner; submitError is available via useConsent
+    }
   }
 
   const handleToggle = (code: string) => {
@@ -54,8 +71,12 @@ export function ConsentManager({ publicKey, client, storage }: ConsentManagerPro
     const decisions = Object.fromEntries(
       purposes.map((p) => [p.code, p.is_essential || Boolean(pendingDecisions[p.code])]),
     )
-    await submit(decisions)
-    setView('hidden')
+    try {
+      await submit(decisions)
+      setView('hidden')
+    } catch {
+      // stay on the preference center; submitError is available via useConsent
+    }
   }
 
   if (view === 'preferences') {

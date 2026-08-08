@@ -21,6 +21,11 @@ export function HomePage() {
           View the consent banner demo →
         </Link>
       </p>
+      <p className="mt-2 text-sm">
+        <Link to="/rights" className="text-blue-600 underline">
+          View the DSAR request portal demo →
+        </Link>
+      </p>
     </main>
   )
 }
