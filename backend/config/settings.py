@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "apps.notifications",
     "apps.consent",
     "apps.rights",
+    "apps.cases",
 ]
 
 MIDDLEWARE = [
@@ -137,6 +138,7 @@ REST_FRAMEWORK = {
         # can be tuned independently.
         "consent_public": env("CONSENT_PUBLIC_THROTTLE_RATE", default="60/min"),
         "rights_public": env("RIGHTS_PUBLIC_THROTTLE_RATE", default="20/hour"),
+        "cases_public": env("CASES_PUBLIC_THROTTLE_RATE", default="20/hour"),
     },
 }
 
