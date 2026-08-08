@@ -32,6 +32,10 @@ class ConsentRepository(ABC):
     ) -> ConsentRecordEntity | None:
         ...
 
+    @abstractmethod
+    def list_records(self, organization_id: uuid.UUID) -> list[ConsentRecordEntity]:
+        ...
+
 
 class RegionRuleStrategy(ABC):
     """

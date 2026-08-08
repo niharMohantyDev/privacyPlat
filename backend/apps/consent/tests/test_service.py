@@ -117,3 +117,22 @@ def test_get_current_consent_returns_the_latest_version():
     )
     current = service.get_current_consent(organization_id=ORG_ID, subject_key="device-7")
     assert current.version == 2
+
+
+def test_list_records_returns_every_record_for_the_organization():
+    repository = FakeConsentRepository(purposes=[ESSENTIAL])
+    service = make_service(repository=repository)
+    other_org = uuid.uuid4()
+
+    service.record_consent(
+        organization_id=ORG_ID, asset_id=None, subject_key="device-8", region="DE", decisions={}
+    )
+    service.record_consent(
+        organization_id=ORG_ID, asset_id=None, subject_key="device-9", region="IN", decisions={}
+    )
+    service.record_consent(
+        organization_id=other_org, asset_id=None, subject_key="device-x", region="DE", decisions={}
+    )
+
+    records = service.list_records(organization_id=ORG_ID)
+    assert {r.subject_key for r in records} == {"device-8", "device-9"}

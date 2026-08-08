@@ -76,6 +76,23 @@ class DjangoConsentRepository(ConsentRepository):
         )
         return self._record_to_entity(row, decisions)
 
+    def list_records(self, organization_id: uuid.UUID) -> list[ConsentRecordEntity]:
+        rows = (
+            ConsentRecord.objects.filter(organization_id=organization_id)
+            .prefetch_related("decisions__purpose")
+            .order_by("-created_at")
+        )
+        return [
+            self._record_to_entity(
+                row,
+                tuple(
+                    ConsentDecisionEntity(purpose_code=d.purpose.code, granted=d.granted)
+                    for d in row.decisions.all()
+                ),
+            )
+            for row in rows
+        ]
+
     @staticmethod
     def _purpose_to_entity(purpose: Purpose) -> PurposeEntity:
         return PurposeEntity(

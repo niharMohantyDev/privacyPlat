@@ -94,6 +94,9 @@ class ConsentService:
     ) -> ConsentRecordEntity | None:
         return self._repository.get_latest(organization_id, subject_key)
 
+    def list_records(self, *, organization_id: uuid.UUID) -> list[ConsentRecordEntity]:
+        return self._repository.list_records(organization_id)
+
     @staticmethod
     def _resolve_decision(purpose, decisions: dict[str, bool], strategy) -> bool:
         if purpose.is_essential:
