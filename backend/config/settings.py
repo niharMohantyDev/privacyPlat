@@ -40,11 +40,13 @@ INSTALLED_APPS = [
     "apps.auditlog",
     "apps.notifications",
     "apps.consent",
+    "apps.rights",
 ]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "corsheaders.middleware.CorsMiddleware",
+    "apps.core.middleware.PublicEndpointCorsMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -134,6 +136,7 @@ REST_FRAMEWORK = {
         # sharing DRF's blanket 'anon' bucket, so future public endpoints
         # can be tuned independently.
         "consent_public": env("CONSENT_PUBLIC_THROTTLE_RATE", default="60/min"),
+        "rights_public": env("RIGHTS_PUBLIC_THROTTLE_RATE", default="20/hour"),
     },
 }
 
