@@ -2,8 +2,9 @@ import { useMemo, useState } from 'react'
 
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
+import { detectRegion } from '@/lib/region'
+
 import { ConsentApiClient } from '../api/ConsentApiClient'
-import { detectRegion } from '../region'
 import { LocalStorageConsentStorage } from '../storage/LocalStorageConsentStorage'
 import type { ConsentStorageStrategy } from '../storage/ConsentStorageStrategy'
 import type { ConsentReceipt, IConsentApiClient } from '../types'
