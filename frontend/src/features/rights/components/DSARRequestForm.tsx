@@ -1,5 +1,7 @@
 import { useState } from 'react'
 
+import { Button } from '@/components/ui/Button'
+
 import { REQUEST_TYPES, type RequestType } from '../types'
 
 interface DSARRequestFormProps {
@@ -56,13 +58,9 @@ export function DSARRequestForm({ onSubmit, isSubmitting, errorMessage }: DSARRe
 
       {errorMessage && <p className="text-sm text-red-600">{errorMessage}</p>}
 
-      <button
-        type="submit"
-        disabled={isSubmitting}
-        className="w-full rounded-md bg-neutral-900 px-3 py-2 text-sm font-medium text-white hover:bg-neutral-700 disabled:opacity-50 dark:bg-white dark:text-neutral-900"
-      >
+      <Button type="submit" disabled={isSubmitting} className="w-full">
         {isSubmitting ? 'Submitting…' : 'Submit Request'}
-      </button>
+      </Button>
     </form>
   )
 }

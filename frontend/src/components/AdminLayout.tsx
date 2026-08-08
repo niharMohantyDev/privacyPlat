@@ -4,6 +4,9 @@ import { Link, useLocation } from 'react-router-dom'
 
 import { useAuth } from '@/features/auth/hooks/useAuth'
 
+import { Logo } from './Logo'
+import { Button } from './ui/Button'
+
 const NAV_ITEMS = [
   { to: '/admin', label: 'DSAR Queue' },
   { to: '/admin/purposes', label: 'Purposes' },
@@ -21,27 +24,30 @@ export function AdminLayout({ children }: AdminLayoutProps) {
   const location = useLocation()
 
   return (
-    <div className="min-h-screen">
-      <nav className="border-b border-neutral-200 dark:border-neutral-800">
-        <div className="mx-auto flex max-w-4xl items-center justify-between px-8 py-4">
-          <div className="flex gap-6">
-            {NAV_ITEMS.map((item) => (
-              <Link
-                key={item.to}
-                to={item.to}
-                className={
-                  location.pathname === item.to
-                    ? 'text-sm font-semibold text-neutral-900 dark:text-white'
-                    : 'text-sm text-neutral-500 hover:text-neutral-900 dark:hover:text-white'
-                }
-              >
-                {item.label}
-              </Link>
-            ))}
+    <div className="min-h-screen bg-neutral-50 dark:bg-neutral-950">
+      <nav className="border-b border-neutral-200 bg-white dark:border-neutral-800 dark:bg-neutral-900">
+        <div className="mx-auto flex max-w-6xl items-center justify-between px-8 py-3">
+          <div className="flex items-center gap-8">
+            <Logo size="sm" to="/admin" />
+            <div className="flex gap-6">
+              {NAV_ITEMS.map((item) => (
+                <Link
+                  key={item.to}
+                  to={item.to}
+                  className={
+                    location.pathname === item.to
+                      ? 'border-b-2 border-indigo-600 py-1 text-sm font-semibold text-neutral-900 dark:text-white'
+                      : 'border-b-2 border-transparent py-1 text-sm text-neutral-500 hover:text-neutral-900 dark:hover:text-white'
+                  }
+                >
+                  {item.label}
+                </Link>
+              ))}
+            </div>
           </div>
-          <button type="button" onClick={logout} className="text-sm text-blue-600 underline">
+          <Button variant="ghost" size="sm" onClick={logout}>
             Sign out
-          </button>
+          </Button>
         </div>
       </nav>
       {children}

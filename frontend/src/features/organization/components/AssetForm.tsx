@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react'
 
+import { Button } from '@/components/ui/Button'
+
 import { ASSET_TYPES, type Asset, type AssetType, type Workspace } from '../types'
 
 export interface AssetFormValues {
@@ -111,21 +113,13 @@ export function AssetForm({ editingAsset, workspaces, onSubmit, onCancel, isSubm
         </div>
       </div>
       <div className="flex gap-2">
-        <button
-          type="submit"
-          disabled={isSubmitting || workspaces.length === 0}
-          className="rounded-md bg-neutral-900 px-3 py-1.5 text-sm font-medium text-white hover:bg-neutral-700 disabled:opacity-50 dark:bg-white dark:text-neutral-900"
-        >
+        <Button type="submit" size="sm" disabled={isSubmitting || workspaces.length === 0}>
           {editingAsset ? 'Save changes' : 'Add asset'}
-        </button>
+        </Button>
         {editingAsset && (
-          <button
-            type="button"
-            onClick={onCancel}
-            className="rounded-md border border-neutral-300 px-3 py-1.5 text-sm dark:border-neutral-700"
-          >
+          <Button type="button" variant="outline" size="sm" onClick={onCancel}>
             Cancel
-          </button>
+          </Button>
         )}
       </div>
       {workspaces.length === 0 && (

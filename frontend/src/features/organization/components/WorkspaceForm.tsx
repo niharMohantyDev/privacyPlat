@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react'
 
+import { Button } from '@/components/ui/Button'
+
 import type { Workspace } from '../types'
 
 export interface WorkspaceFormValues {
@@ -59,21 +61,13 @@ export function WorkspaceForm({ editingWorkspace, onSubmit, onCancel, isSubmitti
         </div>
       </div>
       <div className="flex gap-2">
-        <button
-          type="submit"
-          disabled={isSubmitting}
-          className="rounded-md bg-neutral-900 px-3 py-1.5 text-sm font-medium text-white hover:bg-neutral-700 disabled:opacity-50 dark:bg-white dark:text-neutral-900"
-        >
+        <Button type="submit" size="sm" disabled={isSubmitting}>
           {editingWorkspace ? 'Save changes' : 'Add workspace'}
-        </button>
+        </Button>
         {editingWorkspace && (
-          <button
-            type="button"
-            onClick={onCancel}
-            className="rounded-md border border-neutral-300 px-3 py-1.5 text-sm dark:border-neutral-700"
-          >
+          <Button type="button" variant="outline" size="sm" onClick={onCancel}>
             Cancel
-          </button>
+          </Button>
         )}
       </div>
     </form>

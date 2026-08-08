@@ -1,3 +1,6 @@
+import { Button } from '@/components/ui/Button'
+import { APP_NAME } from '@/lib/brand'
+
 interface ConsentBannerProps {
   onAcceptAll: () => void
   onRejectAll: () => void
@@ -14,35 +17,23 @@ export function ConsentBanner({ onAcceptAll, onRejectAll, onManage, isSubmitting
       className="fixed inset-x-0 bottom-0 z-50 border-t border-neutral-200 bg-white p-4 shadow-lg dark:border-neutral-800 dark:bg-neutral-900"
     >
       <div className="mx-auto flex max-w-4xl flex-col items-start gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <p className="text-sm text-neutral-600 dark:text-neutral-300">
-          We use cookies for essential site functionality and, with your permission, for
-          analytics, marketing, and personalization. You can change your choice anytime.
-        </p>
+        <div>
+          <p className="text-sm text-neutral-600 dark:text-neutral-300">
+            We use cookies for essential site functionality and, with your permission, for
+            analytics, marketing, and personalization. You can change your choice anytime.
+          </p>
+          <p className="mt-1 text-xs text-neutral-400 dark:text-neutral-500">Powered by {APP_NAME}</p>
+        </div>
         <div className="flex shrink-0 gap-2">
-          <button
-            type="button"
-            onClick={onManage}
-            disabled={isSubmitting}
-            className="rounded-md border border-neutral-300 px-3 py-1.5 text-sm font-medium text-neutral-700 hover:bg-neutral-50 disabled:opacity-50 dark:border-neutral-700 dark:text-neutral-200"
-          >
+          <Button variant="outline" size="sm" onClick={onManage} disabled={isSubmitting}>
             Manage Preferences
-          </button>
-          <button
-            type="button"
-            onClick={onRejectAll}
-            disabled={isSubmitting}
-            className="rounded-md border border-neutral-300 px-3 py-1.5 text-sm font-medium text-neutral-700 hover:bg-neutral-50 disabled:opacity-50 dark:border-neutral-700 dark:text-neutral-200"
-          >
+          </Button>
+          <Button variant="outline" size="sm" onClick={onRejectAll} disabled={isSubmitting}>
             Reject All
-          </button>
-          <button
-            type="button"
-            onClick={onAcceptAll}
-            disabled={isSubmitting}
-            className="rounded-md bg-neutral-900 px-3 py-1.5 text-sm font-medium text-white hover:bg-neutral-700 disabled:opacity-50 dark:bg-white dark:text-neutral-900"
-          >
+          </Button>
+          <Button size="sm" onClick={onAcceptAll} disabled={isSubmitting}>
             Accept All
-          </button>
+          </Button>
         </div>
       </div>
     </div>

@@ -1,3 +1,5 @@
+import { Button } from '@/components/ui/Button'
+
 import type { ConsentPurpose } from '../types'
 
 interface PreferenceCenterProps {
@@ -52,29 +54,19 @@ export function PreferenceCenter({
                   onChange={() => onToggle(purpose.code)}
                   className="peer sr-only"
                 />
-                <div className="h-5 w-9 rounded-full bg-neutral-300 transition peer-checked:bg-neutral-900 peer-disabled:opacity-50 dark:bg-neutral-700 dark:peer-checked:bg-white" />
-                <div className="absolute left-0.5 top-0.5 h-4 w-4 rounded-full bg-white transition peer-checked:translate-x-4 dark:bg-neutral-900" />
+                <div className="h-5 w-9 rounded-full bg-neutral-300 transition peer-checked:bg-indigo-600 peer-disabled:opacity-50 dark:bg-neutral-700" />
+                <div className="absolute left-0.5 top-0.5 h-4 w-4 rounded-full bg-white transition peer-checked:translate-x-4" />
               </label>
             </li>
           ))}
         </ul>
         <div className="mt-6 flex justify-end gap-2">
-          <button
-            type="button"
-            onClick={onClose}
-            disabled={isSubmitting}
-            className="rounded-md border border-neutral-300 px-3 py-1.5 text-sm font-medium text-neutral-700 hover:bg-neutral-50 disabled:opacity-50 dark:border-neutral-700 dark:text-neutral-200"
-          >
+          <Button variant="outline" size="sm" onClick={onClose} disabled={isSubmitting}>
             Cancel
-          </button>
-          <button
-            type="button"
-            onClick={onSave}
-            disabled={isSubmitting}
-            className="rounded-md bg-neutral-900 px-3 py-1.5 text-sm font-medium text-white hover:bg-neutral-700 disabled:opacity-50 dark:bg-white dark:text-neutral-900"
-          >
+          </Button>
+          <Button size="sm" onClick={onSave} disabled={isSubmitting}>
             Save Preferences
-          </button>
+          </Button>
         </div>
       </div>
     </div>

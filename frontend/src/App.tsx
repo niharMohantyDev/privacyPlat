@@ -10,8 +10,10 @@ import { AdminDashboardPage } from '@/pages/AdminDashboardPage'
 import { AdminPurposesPage } from '@/pages/AdminPurposesPage'
 import { AdminWorkspacesPage } from '@/pages/AdminWorkspacesPage'
 import { DemoSitePage } from '@/pages/DemoSitePage'
-import { HomePage } from '@/pages/HomePage'
+import { LandingPage } from '@/pages/LandingPage'
+import { PrivacyPolicyPage } from '@/pages/PrivacyPolicyPage'
 import { RightsPortalPage } from '@/pages/RightsPortalPage'
+import { TermsPage } from '@/pages/TermsPage'
 
 const queryClient = new QueryClient()
 
@@ -28,7 +30,9 @@ export default function App() {
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<HomePage />} />
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/terms" element={<TermsPage />} />
+          <Route path="/privacy" element={<PrivacyPolicyPage />} />
           <Route path="/demo" element={<DemoSitePage />} />
           <Route path="/rights" element={<RightsPortalPage />} />
           <Route path="/admin/login" element={<LoginPage />} />
