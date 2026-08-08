@@ -8,7 +8,8 @@ import { Logo } from './Logo'
 import { Button } from './ui/Button'
 
 const NAV_ITEMS = [
-  { to: '/admin', label: 'DSAR Queue' },
+  { to: '/admin', label: 'Overview' },
+  { to: '/admin/requests', label: 'DSAR Queue' },
   { to: '/admin/cases', label: 'Cases' },
   { to: '/admin/purposes', label: 'Purposes' },
   { to: '/admin/consent-log', label: 'Consent Log' },

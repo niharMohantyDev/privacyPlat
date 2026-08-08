@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     "apps.consent",
     "apps.rights",
     "apps.cases",
+    "apps.dashboard",
 ]
 
 MIDDLEWARE = [
