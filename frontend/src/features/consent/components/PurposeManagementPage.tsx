@@ -15,6 +15,11 @@ export function PurposeManagementPage({ organizationId, client }: PurposeManagem
   const { purposes, isLoading, loadError, create, update, remove, isMutating, mutationError } =
     usePurposes({ organizationId, client })
   const [editingPurpose, setEditingPurpose] = useState<AdminPurpose | null>(null)
+  // PurposeForm resets its internal state from a useEffect keyed on
+  // editingPurpose — that's a no-op on a successful *create*, since
+  // editingPurpose is null both before and after. Remounting the form
+  // (via this key) on every successful submit is what actually clears it.
+  const [formResetKey, setFormResetKey] = useState(0)
 
   const handleSubmit = (values: PurposeFormValues) => {
     const action = editingPurpose
@@ -23,7 +28,12 @@ export function PurposeManagementPage({ organizationId, client }: PurposeManagem
     // mutateAsync rejects on failure; mutationError already tracks it
     // reactively (see usePurposes), so the rejection itself just needs
     // to not become an unhandled one.
-    action.then(() => setEditingPurpose(null)).catch(() => {})
+    action
+      .then(() => {
+        setEditingPurpose(null)
+        setFormResetKey((k) => k + 1)
+      })
+      .catch(() => {})
   }
 
   const handleDelete = (id: string) => {
@@ -42,6 +52,7 @@ export function PurposeManagementPage({ organizationId, client }: PurposeManagem
         <div className="space-y-6">
           <PurposeTable purposes={purposes} onEdit={setEditingPurpose} onDelete={handleDelete} />
           <PurposeForm
+            key={formResetKey}
             editingPurpose={editingPurpose}
             onSubmit={handleSubmit}
             onCancel={() => setEditingPurpose(null)}

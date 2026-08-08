@@ -8,6 +8,8 @@ const NAV_ITEMS = [
   { to: '/admin', label: 'DSAR Queue' },
   { to: '/admin/purposes', label: 'Purposes' },
   { to: '/admin/consent-log', label: 'Consent Log' },
+  { to: '/admin/workspaces', label: 'Workspaces' },
+  { to: '/admin/assets', label: 'Assets' },
 ] as const
 
 interface AdminLayoutProps {
