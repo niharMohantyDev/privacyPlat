@@ -33,3 +33,27 @@ export interface DSARRequest {
 export interface IRightsApiClient {
   submitRequest(input: SubmitDSARInput): Promise<DSARRequest>
 }
+
+// 'submitted' excluded — it's the initial state, never a transition
+// target (see apps.rights.domain.states on the backend, which is the
+// actual source of truth; this list is UX-only, see RightsAdminApiClient).
+export const STATUS_OPTIONS = [
+  { value: 'identity_verification', label: 'Identity Verification' },
+  { value: 'in_progress', label: 'In Progress' },
+  { value: 'pending_review', label: 'Pending Review' },
+  { value: 'completed', label: 'Completed' },
+  { value: 'rejected', label: 'Rejected' },
+  { value: 'withdrawn', label: 'Withdrawn' },
+] as const
+
+export interface TransitionDSARInput {
+  requestId: string
+  targetStatus: string
+  note?: string
+}
+
+/** What useDSARQueue/DSARQueuePage depend on — RightsAdminApiClient implements this. */
+export interface IRightsAdminApiClient {
+  listRequests(organizationId: string): Promise<DSARRequest[]>
+  transitionRequest(organizationId: string, input: TransitionDSARInput): Promise<DSARRequest>
+}

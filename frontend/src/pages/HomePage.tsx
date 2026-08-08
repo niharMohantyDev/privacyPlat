@@ -26,6 +26,11 @@ export function HomePage() {
           View the DSAR request portal demo →
         </Link>
       </p>
+      <p className="mt-2 text-sm">
+        <Link to="/admin" className="text-blue-600 underline">
+          Staff admin dashboard →
+        </Link>
+      </p>
     </main>
   )
 }
