@@ -5,6 +5,7 @@ import { Link, useLocation } from 'react-router-dom'
 import { useAuth } from '@/features/auth/hooks/useAuth'
 
 import {
+  BookIcon,
   FileTextIcon,
   GlobeIcon,
   GridIcon,
@@ -20,6 +21,7 @@ const NAV_ITEMS = [
   { to: '/admin', label: 'Overview', icon: GridIcon },
   { to: '/admin/requests', label: 'DSAR Queue', icon: InboxIcon },
   { to: '/admin/cases', label: 'Cases', icon: ShieldIcon },
+  { to: '/admin/ropa', label: 'RoPA', icon: BookIcon },
   { to: '/admin/purposes', label: 'Purposes', icon: ListIcon },
   { to: '/admin/consent-log', label: 'Consent Log', icon: FileTextIcon },
   { to: '/admin/workspaces', label: 'Workspaces', icon: LayersIcon },
