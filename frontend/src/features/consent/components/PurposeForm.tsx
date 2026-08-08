@@ -1,6 +1,9 @@
 import { useEffect, useState } from 'react'
 
 import { Button } from '@/components/ui/Button'
+import { Card } from '@/components/ui/Card'
+import { Field } from '@/components/ui/Field'
+import { Input } from '@/components/ui/Input'
 
 import type { AdminPurpose } from '../types'
 
@@ -49,53 +52,44 @@ export function PurposeForm({ editingPurpose, onSubmit, onCancel, isSubmitting }
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-3 rounded-md border border-neutral-200 p-4">
-      <h2 className="text-sm font-semibold">{editingPurpose ? 'Edit purpose' : 'New purpose'}</h2>
-      <div className="grid grid-cols-2 gap-3">
-        <div>
-          <label htmlFor="purpose-code" className="block text-xs font-medium text-neutral-600">
-            Code
-          </label>
-          <input
+    <Card as="form" onSubmit={handleSubmit} className="space-y-4">
+      <h2 className="text-sm font-semibold text-neutral-900">
+        {editingPurpose ? 'Edit purpose' : 'New purpose'}
+      </h2>
+      <div className="grid grid-cols-2 gap-4">
+        <Field label="Code" htmlFor="purpose-code">
+          <Input
             id="purpose-code"
             value={values.code}
             disabled={Boolean(editingPurpose)}
             onChange={(e) => setValues((v) => ({ ...v, code: e.target.value }))}
-            className="mt-1 w-full rounded-md border border-neutral-300 px-2 py-1 text-sm disabled:bg-neutral-100"
           />
-        </div>
-        <div>
-          <label htmlFor="purpose-name" className="block text-xs font-medium text-neutral-600">
-            Name
-          </label>
-          <input
+        </Field>
+        <Field label="Name" htmlFor="purpose-name">
+          <Input
             id="purpose-name"
             value={values.name}
             onChange={(e) => setValues((v) => ({ ...v, name: e.target.value }))}
-            className="mt-1 w-full rounded-md border border-neutral-300 px-2 py-1 text-sm"
           />
-        </div>
+        </Field>
       </div>
-      <div>
-        <label htmlFor="purpose-description" className="block text-xs font-medium text-neutral-600">
-          Description
-        </label>
-        <input
+      <Field label="Description" htmlFor="purpose-description">
+        <Input
           id="purpose-description"
           value={values.description}
           onChange={(e) => setValues((v) => ({ ...v, description: e.target.value }))}
-          className="mt-1 w-full rounded-md border border-neutral-300 px-2 py-1 text-sm"
         />
-      </div>
-      <label className="flex items-center gap-2 text-sm">
+      </Field>
+      <label className="flex items-center gap-2 text-sm text-neutral-700">
         <input
           type="checkbox"
           checked={values.is_essential}
           onChange={(e) => setValues((v) => ({ ...v, is_essential: e.target.checked }))}
+          className="h-4 w-4 rounded border-neutral-300 text-indigo-600 focus:ring-2 focus:ring-indigo-500/30"
         />
         Essential (always granted, cannot be denied)
       </label>
-      <div className="flex gap-2">
+      <div className="flex gap-2 pt-1">
         <Button type="submit" size="sm" disabled={isSubmitting}>
           {editingPurpose ? 'Save changes' : 'Add purpose'}
         </Button>
@@ -105,6 +99,6 @@ export function PurposeForm({ editingPurpose, onSubmit, onCancel, isSubmitting }
           </Button>
         )}
       </div>
-    </form>
+    </Card>
   )
 }

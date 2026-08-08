@@ -1,8 +1,34 @@
 @import "tailwindcss";
+@import "@fontsource-variable/inter";
 
 :root {
   /* Force light mode regardless of OS/browser preference — native form
      controls (select, checkbox, scrollbars) otherwise still render dark
      even when every Tailwind class in the app is light-mode-only. */
   color-scheme: light;
+}
+
+body {
+  font-family: 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
+  font-feature-settings: 'cv11', 'ss01';
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Subtle scrollbar — avoids the default chunky OS scrollbar clashing
+   with an otherwise carefully-designed interface. */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #d4d4d4;
+  border-radius: 9999px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+::-webkit-scrollbar-thumb:hover {
+  background-color: #a3a3a3;
 }

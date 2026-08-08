@@ -1,5 +1,7 @@
 import { useState } from 'react'
 
+import { PageHeader } from '@/components/ui/PageHeader'
+
 import { usePurposes } from '../hooks/usePurposes'
 import type { AdminPurpose, IConsentAdminApiClient } from '../types'
 import { PurposeForm, type PurposeFormValues } from './PurposeForm'
@@ -42,7 +44,10 @@ export function PurposeManagementPage({ organizationId, client }: PurposeManagem
 
   return (
     <main className="mx-auto max-w-4xl p-8">
-      <h1 className="mb-6 text-xl font-semibold">Purpose Management</h1>
+      <PageHeader
+        title="Purpose Management"
+        description="The processing purposes your consent banner and preference center ask visitors about."
+      />
 
       {isLoading && <p className="text-sm text-neutral-500">Loading…</p>}
       {loadError && <p className="text-sm text-red-600">Failed to load purposes.</p>}

@@ -1,3 +1,5 @@
+import { PageHeader } from '@/components/ui/PageHeader'
+
 import { useConsentLog } from '../hooks/useConsentLog'
 import type { IConsentAdminApiClient } from '../types'
 import { ConsentLogTable } from './ConsentLogTable'
@@ -13,7 +15,7 @@ export function ConsentLogPage({ organizationId, client }: ConsentLogPageProps) 
 
   return (
     <main className="mx-auto max-w-4xl p-8">
-      <h1 className="mb-6 text-xl font-semibold">Consent Log</h1>
+      <PageHeader title="Consent Log" description="Every consent decision, immutable and versioned." />
 
       {isLoading && <p className="text-sm text-neutral-500">Loading…</p>}
       {loadError && <p className="text-sm text-red-600">Failed to load consent records.</p>}

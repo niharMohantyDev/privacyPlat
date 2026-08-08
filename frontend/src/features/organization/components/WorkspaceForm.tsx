@@ -1,6 +1,9 @@
 import { useEffect, useState } from 'react'
 
 import { Button } from '@/components/ui/Button'
+import { Card } from '@/components/ui/Card'
+import { Field } from '@/components/ui/Field'
+import { Input } from '@/components/ui/Input'
 
 import type { Workspace } from '../types'
 
@@ -33,34 +36,28 @@ export function WorkspaceForm({ editingWorkspace, onSubmit, onCancel, isSubmitti
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-3 rounded-md border border-neutral-200 p-4">
-      <h2 className="text-sm font-semibold">{editingWorkspace ? 'Edit workspace' : 'New workspace'}</h2>
-      <div className="grid grid-cols-2 gap-3">
-        <div>
-          <label htmlFor="workspace-name" className="block text-xs font-medium text-neutral-600">
-            Name
-          </label>
-          <input
+    <Card as="form" onSubmit={handleSubmit} className="space-y-4">
+      <h2 className="text-sm font-semibold text-neutral-900">
+        {editingWorkspace ? 'Edit workspace' : 'New workspace'}
+      </h2>
+      <div className="grid grid-cols-2 gap-4">
+        <Field label="Name" htmlFor="workspace-name">
+          <Input
             id="workspace-name"
             value={values.name}
             onChange={(e) => setValues((v) => ({ ...v, name: e.target.value }))}
-            className="mt-1 w-full rounded-md border border-neutral-300 px-2 py-1 text-sm"
           />
-        </div>
-        <div>
-          <label htmlFor="workspace-slug" className="block text-xs font-medium text-neutral-600">
-            Slug
-          </label>
-          <input
+        </Field>
+        <Field label="Slug" htmlFor="workspace-slug">
+          <Input
             id="workspace-slug"
             value={values.slug}
             disabled={Boolean(editingWorkspace)}
             onChange={(e) => setValues((v) => ({ ...v, slug: e.target.value }))}
-            className="mt-1 w-full rounded-md border border-neutral-300 px-2 py-1 text-sm disabled:bg-neutral-100"
           />
-        </div>
+        </Field>
       </div>
-      <div className="flex gap-2">
+      <div className="flex gap-2 pt-1">
         <Button type="submit" size="sm" disabled={isSubmitting}>
           {editingWorkspace ? 'Save changes' : 'Add workspace'}
         </Button>
@@ -70,6 +67,6 @@ export function WorkspaceForm({ editingWorkspace, onSubmit, onCancel, isSubmitti
           </Button>
         )}
       </div>
-    </form>
+    </Card>
   )
 }

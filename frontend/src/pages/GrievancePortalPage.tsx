@@ -18,12 +18,14 @@ export function GrievancePortalPage() {
           ← Back to Consentra
         </Link>
       </div>
-      <main className="mx-auto max-w-2xl p-8">
-        <h1 className="text-2xl font-semibold text-neutral-900">File a grievance</h1>
-        <p className="mt-2 mb-8 text-sm text-neutral-600">
-          Let Acme Inc. know about a privacy-related concern or complaint. This form calls the platform's
-          public grievance API directly — the same one a real customer's contact page would embed.
-        </p>
+      <main className="mx-auto max-w-2xl px-6 py-16">
+        <div className="mb-8 text-center">
+          <h1 className="text-2xl font-semibold text-neutral-900">File a grievance</h1>
+          <p className="mx-auto mt-2 max-w-lg text-sm text-neutral-600">
+            Let Acme Inc. know about a privacy-related concern or complaint. This form calls the platform's
+            public grievance API directly — the same one a real customer's contact page would embed.
+          </p>
+        </div>
         <GrievancePortal publicKey={DEMO_ASSET_PUBLIC_KEY} />
       </main>
     </div>

@@ -139,6 +139,27 @@ export function UsersIcon(props: IconProps) {
   )
 }
 
+export function PencilIcon(props: IconProps) {
+  return (
+    <svg {...BASE_PROPS} {...props}>
+      <path d="m15 4.5 4.5 4.5-11 11H4v-4.5Z" />
+      <path d="m13.3 6.2 4.5 4.5" />
+    </svg>
+  )
+}
+
+export function TrashIcon(props: IconProps) {
+  return (
+    <svg {...BASE_PROPS} {...props}>
+      <path d="M5 7h14" />
+      <path d="M9 7V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2" />
+      <path d="M6.5 7 7.3 19a1.5 1.5 0 0 0 1.5 1.4h6.4a1.5 1.5 0 0 0 1.5-1.4L17.5 7" />
+      <path d="M10.3 11v6" />
+      <path d="M13.7 11v6" />
+    </svg>
+  )
+}
+
 export function LogOutIcon(props: IconProps) {
   return (
     <svg {...BASE_PROPS} {...props}>

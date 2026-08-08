@@ -1,15 +1,14 @@
 import { useState } from 'react'
 
 import { Button } from '@/components/ui/Button'
+import { Field } from '@/components/ui/Field'
+import { Input } from '@/components/ui/Input'
 
 interface LoginFormProps {
   onSubmit: (input: { email: string; password: string }) => void
   isSubmitting: boolean
   errorMessage?: string | null
 }
-
-const INPUT_CLASSES =
-  'mt-1 w-full rounded-md border border-neutral-300 px-3 py-2 text-sm outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500'
 
 /** Presentational only — see apps/consent's ConsentBanner for the same convention. */
 export function LoginForm({ onSubmit, isSubmitting, errorMessage }: LoginFormProps) {
@@ -24,32 +23,24 @@ export function LoginForm({ onSubmit, isSubmitting, errorMessage }: LoginFormPro
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      <div>
-        <label htmlFor="login-email" className="block text-sm font-medium text-neutral-700">
-          Email
-        </label>
-        <input
+      <Field label="Email" htmlFor="login-email">
+        <Input
           id="login-email"
           type="email"
           required
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className={INPUT_CLASSES}
         />
-      </div>
-      <div>
-        <label htmlFor="login-password" className="block text-sm font-medium text-neutral-700">
-          Password
-        </label>
-        <input
+      </Field>
+      <Field label="Password" htmlFor="login-password">
+        <Input
           id="login-password"
           type="password"
           required
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className={INPUT_CLASSES}
         />
-      </div>
+      </Field>
 
       {errorMessage && <p className="text-sm text-red-600">{errorMessage}</p>}
 
