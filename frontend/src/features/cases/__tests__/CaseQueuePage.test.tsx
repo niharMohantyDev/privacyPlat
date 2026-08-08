@@ -20,6 +20,19 @@ const CASE: Case = {
   notes: '',
 }
 
+function fakeClient(overrides: Partial<ICasesAdminApiClient> = {}): ICasesAdminApiClient {
+  return {
+    listCases: vi.fn(),
+    reportCase: vi.fn(),
+    transitionCase: vi.fn(),
+    listObligations: vi.fn(),
+    createObligation: vi.fn(),
+    markObligationNotified: vi.fn(),
+    markObligationNotRequired: vi.fn(),
+    ...overrides,
+  }
+}
+
 function renderWithQueryClient(ui: React.ReactElement) {
   const queryClient = new QueryClient()
   return render(<QueryClientProvider client={queryClient}>{ui}</QueryClientProvider>)
@@ -27,11 +40,7 @@ function renderWithQueryClient(ui: React.ReactElement) {
 
 describe('CaseQueuePage', () => {
   it('loads and displays the queue', async () => {
-    const client: ICasesAdminApiClient = {
-      listCases: vi.fn().mockResolvedValue([CASE]),
-      reportCase: vi.fn(),
-      transitionCase: vi.fn(),
-    }
+    const client = fakeClient({ listCases: vi.fn().mockResolvedValue([CASE]) })
 
     renderWithQueryClient(<CaseQueuePage organizationId="org-1" client={client} />)
 
@@ -40,11 +49,10 @@ describe('CaseQueuePage', () => {
   })
 
   it('shows an error message when a transition is rejected', async () => {
-    const client: ICasesAdminApiClient = {
+    const client = fakeClient({
       listCases: vi.fn().mockResolvedValue([CASE]),
-      reportCase: vi.fn(),
       transitionCase: vi.fn().mockRejectedValue(new Error('invalid transition')),
-    }
+    })
 
     renderWithQueryClient(<CaseQueuePage organizationId="org-1" client={client} />)
     await screen.findByText('Unencrypted backup exposed')
@@ -61,11 +69,10 @@ describe('CaseQueuePage', () => {
   })
 
   it('reports a new case via the inline form', async () => {
-    const client: ICasesAdminApiClient = {
+    const client = fakeClient({
       listCases: vi.fn().mockResolvedValue([]),
       reportCase: vi.fn().mockResolvedValue({ ...CASE, id: 'c2', title: 'New leak' }),
-      transitionCase: vi.fn(),
-    }
+    })
 
     renderWithQueryClient(<CaseQueuePage organizationId="org-1" client={client} />)
     await waitFor(() => expect(client.listCases).toHaveBeenCalled())

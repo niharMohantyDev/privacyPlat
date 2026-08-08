@@ -77,7 +77,13 @@ export function CaseQueuePage({ organizationId, client }: CaseQueuePageProps) {
       )}
 
       {!isLoading && !loadError && (
-        <CaseQueueTable cases={cases} onTransition={handleTransition} isTransitioning={isTransitioning} />
+        <CaseQueueTable
+          cases={cases}
+          organizationId={organizationId}
+          onTransition={handleTransition}
+          isTransitioning={isTransitioning}
+          client={client}
+        />
       )}
     </main>
   )

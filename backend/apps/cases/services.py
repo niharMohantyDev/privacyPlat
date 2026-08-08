@@ -27,12 +27,18 @@ class CaseService:
         audit_logger: Callable[..., None] | None = None,
         sla_strategy_factory: type[CaseSLAStrategyFactory] = CaseSLAStrategyFactory,
         state_registry: type[CaseStateRegistry] = CaseStateRegistry,
+        on_case_reported: Callable[[CaseEntity], None] | None = None,
     ):
         self._repository = repository
         self._notifier = notifier
         self._audit_logger = audit_logger
         self._sla_strategy_factory = sla_strategy_factory
         self._state_registry = state_registry
+        # Optional extension point invoked after a case is saved and
+        # notified — e.g. DjangoBreachObligationSeeder, which auto-adds
+        # the standard notification checklist when the report is a
+        # breach. Decides its own relevance; CaseService just calls it.
+        self._on_case_reported = on_case_reported
 
     def report_case(
         self,
@@ -78,6 +84,8 @@ class CaseService:
             )
         if self._notifier:
             self._notifier.notify_reported(saved)
+        if self._on_case_reported:
+            self._on_case_reported(saved)
 
         return saved
 

@@ -2,7 +2,15 @@ import type { AxiosInstance } from 'axios'
 
 import { api } from '@/lib/api'
 
-import type { Case, CaseType, ICasesAdminApiClient, ReportCaseInput, TransitionCaseInput } from '../types'
+import type {
+  BreachNotificationObligation,
+  Case,
+  CaseType,
+  CreateObligationInput,
+  ICasesAdminApiClient,
+  ReportCaseInput,
+  TransitionCaseInput,
+} from '../types'
 
 /**
  * Authenticated counterpart to CasesApiClient — staff triage instead
@@ -52,6 +60,53 @@ export class CasesAdminApiClient implements ICasesAdminApiClient {
     const response = await this.http.post<Case>(
       `/api/cases/${caseId}/transition/`,
       { target_status: targetStatus, note },
+      { params: { organization_id: organizationId } },
+    )
+    return response.data
+  }
+
+  async listObligations(organizationId: string, caseId: string): Promise<BreachNotificationObligation[]> {
+    const response = await this.http.get<BreachNotificationObligation[]>(
+      `/api/cases/${caseId}/notifications/`,
+      { params: { organization_id: organizationId } },
+    )
+    return response.data
+  }
+
+  async createObligation(
+    organizationId: string,
+    caseId: string,
+    { recipientType, recipientIdentifier }: CreateObligationInput,
+  ): Promise<BreachNotificationObligation> {
+    const response = await this.http.post<BreachNotificationObligation>(
+      `/api/cases/${caseId}/notifications/create/`,
+      { recipient_type: recipientType, recipient_identifier: recipientIdentifier },
+      { params: { organization_id: organizationId } },
+    )
+    return response.data
+  }
+
+  async markObligationNotified(
+    organizationId: string,
+    obligationId: string,
+    notes?: string,
+  ): Promise<BreachNotificationObligation> {
+    const response = await this.http.post<BreachNotificationObligation>(
+      `/api/cases/notifications/${obligationId}/mark-notified/`,
+      { notes },
+      { params: { organization_id: organizationId } },
+    )
+    return response.data
+  }
+
+  async markObligationNotRequired(
+    organizationId: string,
+    obligationId: string,
+    notes?: string,
+  ): Promise<BreachNotificationObligation> {
+    const response = await this.http.post<BreachNotificationObligation>(
+      `/api/cases/notifications/${obligationId}/mark-not-required/`,
+      { notes },
       { params: { organization_id: organizationId } },
     )
     return response.data

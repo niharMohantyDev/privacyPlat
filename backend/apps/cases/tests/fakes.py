@@ -1,8 +1,10 @@
-"""In-memory CaseRepository/CaseNotifier test doubles — same rationale as
-apps.rights.tests.fakes.FakeDSARRequestRepository."""
+"""In-memory CaseRepository/CaseNotifier/obligation test doubles — same
+rationale as apps.rights.tests.fakes.FakeDSARRequestRepository."""
 
 from apps.cases.domain.entities import CaseEntity
 from apps.cases.domain.interfaces import CaseNotifier, CaseRepository
+from apps.cases.domain.obligation_entities import BreachNotificationObligationEntity
+from apps.cases.domain.obligation_interfaces import BreachNotificationObligationRepository
 
 
 class FakeCaseRepository(CaseRepository):
@@ -36,3 +38,25 @@ class FakeCaseNotifier(CaseNotifier):
 
     def notify_resolved(self, case: CaseEntity) -> None:
         self.resolved.append(case)
+
+
+class FakeBreachNotificationObligationRepository(BreachNotificationObligationRepository):
+    def __init__(self):
+        self._by_id: dict = {}
+
+    def save(self, obligation: BreachNotificationObligationEntity) -> BreachNotificationObligationEntity:
+        self._by_id[obligation.id] = obligation
+        return obligation
+
+    def get(self, organization_id, obligation_id):
+        obligation = self._by_id.get(obligation_id)
+        if obligation is None or obligation.organization_id != organization_id:
+            return None
+        return obligation
+
+    def list_for_case(self, organization_id, case_id):
+        return [
+            o
+            for o in self._by_id.values()
+            if o.organization_id == organization_id and o.case_id == case_id
+        ]
