@@ -28,3 +28,6 @@ class FakeConsentRepository(ConsentRepository):
             if r.organization_id == organization_id and r.subject_key == subject_key
         ]
         return max(matches, key=lambda r: r.version) if matches else None
+
+    def list_records(self, organization_id):
+        return [r for r in self._records if r.organization_id == organization_id]

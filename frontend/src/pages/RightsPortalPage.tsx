@@ -1,20 +1,11 @@
+import { MissingDemoConfig } from '@/components/MissingDemoConfig'
 import { DSARPortal } from '@/features/rights/components/DSARPortal'
-
-const PUBLIC_KEY = import.meta.env.VITE_DEMO_ASSET_PUBLIC_KEY as string | undefined
+import { DEMO_ASSET_PUBLIC_KEY } from '@/lib/demoConfig'
 
 /** Stands in for a customer's "Privacy Rights" / "Do Not Sell My Data" page. */
 export function RightsPortalPage() {
-  if (!PUBLIC_KEY) {
-    return (
-      <main className="mx-auto max-w-2xl p-8">
-        <h1 className="text-2xl font-semibold">Privacy rights</h1>
-        <p className="mt-2 text-sm text-red-600">
-          VITE_DEMO_ASSET_PUBLIC_KEY is not set. Run{' '}
-          <code className="rounded bg-neutral-100 px-1">python manage.py seed_demo</code> in
-          backend/ and put the printed public_key in frontend/.env.
-        </p>
-      </main>
-    )
+  if (!DEMO_ASSET_PUBLIC_KEY) {
+    return <MissingDemoConfig variable="VITE_DEMO_ASSET_PUBLIC_KEY" />
   }
 
   return (
@@ -25,7 +16,7 @@ export function RightsPortalPage() {
         platform's public DSAR API directly — the same one a real customer's privacy page would
         embed.
       </p>
-      <DSARPortal publicKey={PUBLIC_KEY} />
+      <DSARPortal publicKey={DEMO_ASSET_PUBLIC_KEY} />
     </main>
   )
 }

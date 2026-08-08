@@ -49,6 +49,36 @@ def test_record_and_fetch_current_consent(api_client, org_and_user):
     assert analytics["granted"] is True
 
 
+def test_consent_record_log_lists_all_records_for_the_org(api_client, org_and_user):
+    org, _ = org_and_user
+
+    api_client.post(
+        f"/api/consent/records/?organization_id={org.id}",
+        {"subject_key": "device-a", "region": "DE", "decisions": {"analytics": True}},
+        format="json",
+    )
+    api_client.post(
+        f"/api/consent/records/?organization_id={org.id}",
+        {"subject_key": "device-b", "region": "IN", "decisions": {}},
+        format="json",
+    )
+
+    response = api_client.get(f"/api/consent/records/log/?organization_id={org.id}")
+    assert response.status_code == 200
+    subject_keys = {r["subject_key"] for r in response.json()}
+    assert subject_keys == {"device-a", "device-b"}
+
+
+def test_consent_record_log_rejects_non_members(db):
+    org = Organization.objects.create(name="Other Co", slug="other-co-log")
+    outsider = User.objects.create_user(username="mallory2", email="mallory2@evil.test", password="x")
+    api_client = APIClient()
+    api_client.force_authenticate(user=outsider)
+
+    response = api_client.get(f"/api/consent/records/log/?organization_id={org.id}")
+    assert response.status_code == 403
+
+
 def test_record_consent_rejects_non_members(db):
     org = Organization.objects.create(name="Other Co", slug="other-co")
     outsider = User.objects.create_user(username="mallory", email="mallory@evil.test", password="x")

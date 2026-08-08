@@ -1,11 +1,11 @@
 import { MissingDemoConfig } from '@/components/MissingDemoConfig'
-import { DSARQueuePage } from '@/features/rights/components/DSARQueuePage'
+import { ConsentLogPage } from '@/features/consent/components/ConsentLogPage'
 import { DEMO_ORGANIZATION_ID } from '@/lib/demoConfig'
 
-export function AdminDashboardPage() {
+export function AdminConsentLogPage() {
   if (!DEMO_ORGANIZATION_ID) {
     return <MissingDemoConfig variable="VITE_DEMO_ORGANIZATION_ID" />
   }
 
-  return <DSARQueuePage organizationId={DEMO_ORGANIZATION_ID} />
+  return <ConsentLogPage organizationId={DEMO_ORGANIZATION_ID} />
 }

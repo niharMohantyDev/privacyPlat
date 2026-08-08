@@ -1,6 +1,6 @@
+import { MissingDemoConfig } from '@/components/MissingDemoConfig'
 import { ConsentManager } from '@/features/consent/components/ConsentManager'
-
-const PUBLIC_KEY = import.meta.env.VITE_DEMO_ASSET_PUBLIC_KEY as string | undefined
+import { DEMO_ASSET_PUBLIC_KEY } from '@/lib/demoConfig'
 
 /**
  * Stands in for "a customer's actual website" — the point is that the
@@ -9,17 +9,8 @@ const PUBLIC_KEY = import.meta.env.VITE_DEMO_ASSET_PUBLIC_KEY as string | undefi
  * API keyed by the asset's public_key.
  */
 export function DemoSitePage() {
-  if (!PUBLIC_KEY) {
-    return (
-      <main className="mx-auto max-w-2xl p-8">
-        <h1 className="text-2xl font-semibold">Demo site</h1>
-        <p className="mt-2 text-sm text-red-600">
-          VITE_DEMO_ASSET_PUBLIC_KEY is not set. Run{' '}
-          <code className="rounded bg-neutral-100 px-1">python manage.py seed_demo</code> in
-          backend/ and put the printed public_key in frontend/.env.
-        </p>
-      </main>
-    )
+  if (!DEMO_ASSET_PUBLIC_KEY) {
+    return <MissingDemoConfig variable="VITE_DEMO_ASSET_PUBLIC_KEY" />
   }
 
   return (
@@ -35,7 +26,7 @@ export function DemoSitePage() {
           stored. Clear localStorage to reset it.
         </p>
       </main>
-      <ConsentManager publicKey={PUBLIC_KEY} />
+      <ConsentManager publicKey={DEMO_ASSET_PUBLIC_KEY} />
     </>
   )
 }

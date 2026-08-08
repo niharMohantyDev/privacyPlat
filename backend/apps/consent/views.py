@@ -90,3 +90,23 @@ class CurrentConsentView(APIView):
         if record is None:
             return Response(status=404)
         return Response(ConsentRecordSerializer(record).data)
+
+
+class ConsentRecordListView(APIView):
+    """
+    The consent log — every recorded decision for the org, newest first.
+    Unpaginated, same as DSARRequestListView; acceptable now, a known
+    scale limitation to revisit once a real org accumulates volume.
+    """
+
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        organization_id = request.query_params.get("organization_id")
+        if not organization_id:
+            raise ValidationError({"organization_id": "This query parameter is required."})
+        require_membership(request.user, organization_id)
+
+        service = build_consent_service()
+        records = service.list_records(organization_id=organization_id)
+        return Response(ConsentRecordSerializer(records, many=True).data)

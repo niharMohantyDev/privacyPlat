@@ -1,5 +1,3 @@
-import { useAuth } from '@/features/auth/hooks/useAuth'
-
 import { useDSARQueue } from '../hooks/useDSARQueue'
 import type { IRightsAdminApiClient } from '../types'
 import { DSARQueueTable } from './DSARQueueTable'
@@ -11,7 +9,6 @@ interface DSARQueuePageProps {
 }
 
 export function DSARQueuePage({ organizationId, client }: DSARQueuePageProps) {
-  const { logout } = useAuth()
   const { requests, isLoading, loadError, transition, isTransitioning, transitionError } = useDSARQueue({
     organizationId,
     client,
@@ -26,12 +23,7 @@ export function DSARQueuePage({ organizationId, client }: DSARQueuePageProps) {
 
   return (
     <main className="mx-auto max-w-4xl p-8">
-      <div className="mb-6 flex items-center justify-between">
-        <h1 className="text-xl font-semibold">DSAR Triage Queue</h1>
-        <button type="button" onClick={logout} className="text-sm text-blue-600 underline">
-          Sign out
-        </button>
-      </div>
+      <h1 className="mb-6 text-xl font-semibold">DSAR Triage Queue</h1>
 
       {isLoading && <p className="text-sm text-neutral-500">Loading…</p>}
       {loadError && <p className="text-sm text-red-600">Failed to load requests.</p>}
