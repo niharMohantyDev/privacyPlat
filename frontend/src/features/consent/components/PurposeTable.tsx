@@ -1,3 +1,9 @@
+import { ListIcon, PencilIcon, TrashIcon } from '@/components/icons'
+import { Badge } from '@/components/ui/Badge'
+import { EmptyState } from '@/components/ui/EmptyState'
+import { RowAction } from '@/components/ui/RowAction'
+import { Table, TableBody, TableContainer, TableHead, TableRow, Td, Th } from '@/components/ui/Table'
+
 import type { AdminPurpose } from '../types'
 
 interface PurposeTableProps {
@@ -9,36 +15,55 @@ interface PurposeTableProps {
 /** Presentational only — see apps/consent's ConsentBanner for the same convention. */
 export function PurposeTable({ purposes, onEdit, onDelete }: PurposeTableProps) {
   if (purposes.length === 0) {
-    return <p className="text-sm text-neutral-500">No purposes yet.</p>
+    return (
+      <EmptyState
+        icon={<ListIcon width={20} height={20} />}
+        title="No purposes yet."
+        description="Add one below to start collecting consent for it."
+      />
+    )
   }
 
   return (
-    <table className="w-full text-left text-sm">
-      <thead>
-        <tr className="border-b border-neutral-200 text-xs uppercase text-neutral-500">
-          <th className="py-2 pr-4">Code</th>
-          <th className="py-2 pr-4">Name</th>
-          <th className="py-2 pr-4">Essential</th>
-          <th className="py-2">Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        {purposes.map((purpose) => (
-          <tr key={purpose.id} className="border-b border-neutral-100">
-            <td className="py-2 pr-4 font-mono text-xs">{purpose.code}</td>
-            <td className="py-2 pr-4">{purpose.name}</td>
-            <td className="py-2 pr-4">{purpose.is_essential ? 'Yes' : 'No'}</td>
-            <td className="py-2">
-              <button type="button" onClick={() => onEdit(purpose)} className="mr-3 text-blue-600 underline">
-                Edit
-              </button>
-              <button type="button" onClick={() => onDelete(purpose.id)} className="text-red-600 underline">
-                Delete
-              </button>
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
+    <TableContainer>
+      <Table>
+        <TableHead>
+          <TableRow>
+            <Th>Code</Th>
+            <Th>Name</Th>
+            <Th>Essential</Th>
+            <Th>Actions</Th>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {purposes.map((purpose) => (
+            <TableRow key={purpose.id}>
+              <Td className="font-mono text-xs text-neutral-500">{purpose.code}</Td>
+              <Td className="font-medium text-neutral-900">{purpose.name}</Td>
+              <Td>
+                <Badge variant={purpose.is_essential ? 'brand' : 'neutral'}>
+                  {purpose.is_essential ? 'Yes' : 'No'}
+                </Badge>
+              </Td>
+              <Td>
+                <div className="flex items-center gap-1">
+                  <RowAction
+                    onClick={() => onEdit(purpose)}
+                    icon={<PencilIcon width={14} height={14} />}
+                    label="Edit"
+                  />
+                  <RowAction
+                    onClick={() => onDelete(purpose.id)}
+                    icon={<TrashIcon width={14} height={14} />}
+                    label="Delete"
+                    tone="danger"
+                  />
+                </div>
+              </Td>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
   )
 }

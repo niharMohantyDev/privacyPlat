@@ -1,3 +1,8 @@
+import { LayersIcon, PencilIcon, TrashIcon } from '@/components/icons'
+import { EmptyState } from '@/components/ui/EmptyState'
+import { RowAction } from '@/components/ui/RowAction'
+import { Table, TableBody, TableContainer, TableHead, TableRow, Td, Th } from '@/components/ui/Table'
+
 import type { Workspace } from '../types'
 
 interface WorkspaceTableProps {
@@ -9,38 +14,49 @@ interface WorkspaceTableProps {
 /** Presentational only — see apps/consent's ConsentBanner for the same convention. */
 export function WorkspaceTable({ workspaces, onEdit, onDelete }: WorkspaceTableProps) {
   if (workspaces.length === 0) {
-    return <p className="text-sm text-neutral-500">No workspaces yet.</p>
+    return (
+      <EmptyState
+        icon={<LayersIcon width={20} height={20} />}
+        title="No workspaces yet."
+        description="Add one below to start grouping assets under it."
+      />
+    )
   }
 
   return (
-    <table className="w-full text-left text-sm">
-      <thead>
-        <tr className="border-b border-neutral-200 text-xs uppercase text-neutral-500">
-          <th className="py-2 pr-4">Name</th>
-          <th className="py-2 pr-4">Slug</th>
-          <th className="py-2">Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        {workspaces.map((workspace) => (
-          <tr key={workspace.id} className="border-b border-neutral-100">
-            <td className="py-2 pr-4">{workspace.name}</td>
-            <td className="py-2 pr-4 font-mono text-xs">{workspace.slug}</td>
-            <td className="py-2">
-              <button
-                type="button"
-                onClick={() => onEdit(workspace)}
-                className="mr-3 text-blue-600 underline"
-              >
-                Edit
-              </button>
-              <button type="button" onClick={() => onDelete(workspace.id)} className="text-red-600 underline">
-                Delete
-              </button>
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
+    <TableContainer>
+      <Table>
+        <TableHead>
+          <TableRow>
+            <Th>Name</Th>
+            <Th>Slug</Th>
+            <Th>Actions</Th>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {workspaces.map((workspace) => (
+            <TableRow key={workspace.id}>
+              <Td className="font-medium text-neutral-900">{workspace.name}</Td>
+              <Td className="font-mono text-xs text-neutral-500">{workspace.slug}</Td>
+              <Td>
+                <div className="flex items-center gap-1">
+                  <RowAction
+                    onClick={() => onEdit(workspace)}
+                    icon={<PencilIcon width={14} height={14} />}
+                    label="Edit"
+                  />
+                  <RowAction
+                    onClick={() => onDelete(workspace.id)}
+                    icon={<TrashIcon width={14} height={14} />}
+                    label="Delete"
+                    tone="danger"
+                  />
+                </div>
+              </Td>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
   )
 }

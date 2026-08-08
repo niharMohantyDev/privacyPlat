@@ -1,5 +1,7 @@
 import { useState } from 'react'
 
+import { PageHeader } from '@/components/ui/PageHeader'
+
 import { useAssets } from '../hooks/useAssets'
 import { useWorkspaces } from '../hooks/useWorkspaces'
 import type { Asset, ICoreAdminApiClient } from '../types'
@@ -49,12 +51,12 @@ export function AssetManagementPage({ organizationId, client }: AssetManagementP
 
   return (
     <main className="mx-auto max-w-4xl p-8">
-      <h1 className="mb-6 text-xl font-semibold">Assets</h1>
-      <p className="mb-6 text-sm text-neutral-600">
+      <PageHeader title="Assets" />
+      <div className="mb-6 rounded-lg border border-indigo-100 bg-indigo-50/60 px-4 py-3 text-sm text-indigo-900">
         The public key here is what the embeddable Consent Banner and DSAR portal are keyed by — copy it into{' '}
-        <code className="rounded bg-neutral-100 px-1">VITE_DEMO_ASSET_PUBLIC_KEY</code> or a real embed
-        script.
-      </p>
+        <code className="rounded bg-white/70 px-1.5 py-0.5 text-xs">VITE_DEMO_ASSET_PUBLIC_KEY</code> or a
+        real embed script.
+      </div>
 
       {loading && <p className="text-sm text-neutral-500">Loading…</p>}
       {loadError && <p className="text-sm text-red-600">Failed to load assets.</p>}

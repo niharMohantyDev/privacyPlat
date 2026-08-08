@@ -1,5 +1,7 @@
 import { useState } from 'react'
 
+import { PageHeader } from '@/components/ui/PageHeader'
+
 import { useWorkspaces } from '../hooks/useWorkspaces'
 import type { ICoreAdminApiClient, Workspace } from '../types'
 import { WorkspaceForm, type WorkspaceFormValues } from './WorkspaceForm'
@@ -42,7 +44,7 @@ export function WorkspaceManagementPage({ organizationId, client }: WorkspaceMan
 
   return (
     <main className="mx-auto max-w-4xl p-8">
-      <h1 className="mb-6 text-xl font-semibold">Workspaces</h1>
+      <PageHeader title="Workspaces" description="Groupings of assets within your organization." />
 
       {isLoading && <p className="text-sm text-neutral-500">Loading…</p>}
       {loadError && <p className="text-sm text-red-600">Failed to load workspaces.</p>}

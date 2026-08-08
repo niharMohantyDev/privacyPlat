@@ -1,6 +1,10 @@
 import { useState } from 'react'
 
 import { Button } from '@/components/ui/Button'
+import { Card } from '@/components/ui/Card'
+import { Field } from '@/components/ui/Field'
+import { Input } from '@/components/ui/Input'
+import { Select } from '@/components/ui/Select'
 
 import { REQUEST_TYPES, type RequestType } from '../types'
 
@@ -22,45 +26,37 @@ export function DSARRequestForm({ onSubmit, isSubmitting, errorMessage }: DSARRe
   }
 
   return (
-    <form onSubmit={handleSubmit} className="mx-auto max-w-md space-y-4">
-      <div>
-        <label htmlFor="subject-key" className="block text-sm font-medium text-neutral-700">
-          Your email address
-        </label>
-        <input
+    <Card as="form" onSubmit={handleSubmit} className="mx-auto max-w-md space-y-5">
+      <Field label="Your email address" htmlFor="subject-key">
+        <Input
           id="subject-key"
           type="email"
           required
           value={subjectKey}
           onChange={(e) => setSubjectKey(e.target.value)}
           placeholder="you@example.com"
-          className="mt-1 w-full rounded-md border border-neutral-300 px-3 py-2 text-sm"
         />
-      </div>
+      </Field>
 
-      <div>
-        <label htmlFor="request-type" className="block text-sm font-medium text-neutral-700">
-          What would you like to do?
-        </label>
-        <select
+      <Field label="What would you like to do?" htmlFor="request-type">
+        <Select
           id="request-type"
           value={requestType}
           onChange={(e) => setRequestType(e.target.value as RequestType)}
-          className="mt-1 w-full rounded-md border border-neutral-300 px-3 py-2 text-sm"
         >
           {REQUEST_TYPES.map((option) => (
             <option key={option.value} value={option.value}>
               {option.label}
             </option>
           ))}
-        </select>
-      </div>
+        </Select>
+      </Field>
 
       {errorMessage && <p className="text-sm text-red-600">{errorMessage}</p>}
 
       <Button type="submit" disabled={isSubmitting} className="w-full">
         {isSubmitting ? 'Submitting…' : 'Submit Request'}
       </Button>
-    </form>
+    </Card>
   )
 }
