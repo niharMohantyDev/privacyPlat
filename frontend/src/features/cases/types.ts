@@ -67,9 +67,49 @@ export interface ReportCaseInput {
   severity?: Severity
 }
 
+export const RECIPIENT_TYPES = [
+  { value: 'regulator', label: 'Regulator' },
+  { value: 'data_subject', label: 'Data Subject(s)' },
+  { value: 'vendor', label: 'Vendor' },
+] as const
+
+export type RecipientType = (typeof RECIPIENT_TYPES)[number]['value']
+
+export interface BreachNotificationObligation {
+  id: string
+  case_id: string
+  recipient_type: string
+  recipient_identifier: string
+  status: string
+  due_at: string | null
+  notified_at: string | null
+  notes: string
+}
+
+export interface CreateObligationInput {
+  recipientType: RecipientType
+  recipientIdentifier?: string
+}
+
 /** What useCaseQueue/CaseQueuePage depend on — CasesAdminApiClient implements this. */
 export interface ICasesAdminApiClient {
   listCases(organizationId: string, caseType?: CaseType): Promise<Case[]>
   reportCase(organizationId: string, input: ReportCaseInput): Promise<Case>
   transitionCase(organizationId: string, input: TransitionCaseInput): Promise<Case>
+  listObligations(organizationId: string, caseId: string): Promise<BreachNotificationObligation[]>
+  createObligation(
+    organizationId: string,
+    caseId: string,
+    input: CreateObligationInput,
+  ): Promise<BreachNotificationObligation>
+  markObligationNotified(
+    organizationId: string,
+    obligationId: string,
+    notes?: string,
+  ): Promise<BreachNotificationObligation>
+  markObligationNotRequired(
+    organizationId: string,
+    obligationId: string,
+    notes?: string,
+  ): Promise<BreachNotificationObligation>
 }

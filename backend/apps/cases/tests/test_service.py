@@ -91,6 +91,15 @@ def test_list_cases_scoped_to_organization():
     assert results[0].title == "Data leak"
 
 
+def test_report_case_invokes_the_on_case_reported_hook():
+    seen = []
+    service = CaseService(repository=FakeCaseRepository(), on_case_reported=seen.append)
+
+    saved = service.report_case(organization_id=ORG_ID, case_type="breach", title="Data leak")
+
+    assert seen == [saved]
+
+
 def test_list_cases_filters_by_case_type():
     service = make_service()
     service.report_case(organization_id=ORG_ID, case_type="breach", title="Data leak")

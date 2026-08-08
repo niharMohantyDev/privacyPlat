@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Case
+from .models import BreachNotificationObligation, Case
 
 
 class ReportCaseRequestSerializer(serializers.Serializer):
@@ -45,4 +45,24 @@ class CaseSerializer(serializers.Serializer):
     reported_at = serializers.DateTimeField()
     due_at = serializers.DateTimeField(allow_null=True)
     resolved_at = serializers.DateTimeField(allow_null=True)
+    notes = serializers.CharField()
+
+
+class CreateObligationRequestSerializer(serializers.Serializer):
+    recipient_type = serializers.ChoiceField(choices=BreachNotificationObligation.RecipientType.choices)
+    recipient_identifier = serializers.CharField(max_length=255, allow_blank=True, required=False, default="")
+
+
+class MarkObligationRequestSerializer(serializers.Serializer):
+    notes = serializers.CharField(allow_blank=True, required=False, default="")
+
+
+class BreachNotificationObligationSerializer(serializers.Serializer):
+    id = serializers.UUIDField()
+    case_id = serializers.UUIDField()
+    recipient_type = serializers.CharField()
+    recipient_identifier = serializers.CharField()
+    status = serializers.CharField()
+    due_at = serializers.DateTimeField(allow_null=True)
+    notified_at = serializers.DateTimeField(allow_null=True)
     notes = serializers.CharField()
