@@ -20,16 +20,23 @@ class Command(BaseCommand):
     help = "Seed a demo organization/asset/purposes/staff-user/DSAR-requests for local UI development."
 
     def handle(self, *args, **options):
-        org, _ = Organization.objects.get_or_create(
-            slug="demo-org", defaults={"name": "Demo Org", "data_residency_region": "eu"}
-        )
+        # The slug is the stable lookup key across runs; name/region are
+        # kept in sync on every run (not just on first creation) the same
+        # way the staff password is below — convenient for renaming the
+        # seed data without leaving orphaned rows or having to touch
+        # VITE_DEMO_ORGANIZATION_ID.
+        org, _ = Organization.objects.get_or_create(slug="demo-org")
+        org.name = "Acme Inc."
+        org.data_residency_region = "eu"
+        org.save(update_fields=["name", "data_residency_region"])
+
         workspace, _ = Workspace.objects.get_or_create(
             organization=org, slug="marketing-site", defaults={"name": "Marketing Site"}
         )
         asset, _ = Asset.objects.get_or_create(
             workspace=workspace,
-            name="demo.example.com",
-            defaults={"asset_type": Asset.AssetType.WEBSITE, "identifier": "demo.example.com"},
+            identifier="acme.com",
+            defaults={"asset_type": Asset.AssetType.WEBSITE, "name": "acme.com"},
         )
 
         purposes = [

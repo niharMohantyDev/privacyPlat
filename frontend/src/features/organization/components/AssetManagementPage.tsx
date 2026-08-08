@@ -13,9 +13,14 @@ interface AssetManagementPageProps {
 }
 
 export function AssetManagementPage({ organizationId, client }: AssetManagementPageProps) {
-  const { workspaces, isLoading: workspacesLoading } = useWorkspaces({ organizationId, client })
-  const { assets, isLoading, loadError, create, update, remove, isMutating, mutationError } =
-    useAssets({ organizationId, client })
+  const { workspaces, isLoading: workspacesLoading } = useWorkspaces({
+    organizationId,
+    client,
+  })
+  const { assets, isLoading, loadError, create, update, remove, isMutating, mutationError } = useAssets({
+    organizationId,
+    client,
+  })
   const [editingAsset, setEditingAsset] = useState<Asset | null>(null)
   // See WorkspaceManagementPage's formResetKey for why this is needed:
   // AssetForm's reset effect is keyed on editingAsset, which is a no-op
@@ -23,9 +28,7 @@ export function AssetManagementPage({ organizationId, client }: AssetManagementP
   const [formResetKey, setFormResetKey] = useState(0)
 
   const handleSubmit = (values: AssetFormValues) => {
-    const action = editingAsset
-      ? update({ id: editingAsset.id, input: values })
-      : create(values)
+    const action = editingAsset ? update({ id: editingAsset.id, input: values }) : create(values)
     action
       .then(() => {
         setEditingAsset(null)
@@ -47,10 +50,10 @@ export function AssetManagementPage({ organizationId, client }: AssetManagementP
   return (
     <main className="mx-auto max-w-4xl p-8">
       <h1 className="mb-6 text-xl font-semibold">Assets</h1>
-      <p className="mb-6 text-sm text-neutral-600 dark:text-neutral-300">
-        The public key here is what the embeddable Consent Banner and DSAR portal are keyed by —
-        copy it into <code className="rounded bg-neutral-100 px-1">VITE_DEMO_ASSET_PUBLIC_KEY</code>{' '}
-        or a real embed script.
+      <p className="mb-6 text-sm text-neutral-600">
+        The public key here is what the embeddable Consent Banner and DSAR portal are keyed by — copy it into{' '}
+        <code className="rounded bg-neutral-100 px-1">VITE_DEMO_ASSET_PUBLIC_KEY</code> or a real embed
+        script.
       </p>
 
       {loading && <p className="text-sm text-neutral-500">Loading…</p>}
