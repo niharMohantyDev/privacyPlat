@@ -5,11 +5,13 @@ import { AdminLayout } from '@/components/AdminLayout'
 import { LoginPage } from '@/features/auth/components/LoginPage'
 import { RequireAuth } from '@/features/auth/components/RequireAuth'
 import { AdminAssetsPage } from '@/pages/AdminAssetsPage'
+import { AdminCasesPage } from '@/pages/AdminCasesPage'
 import { AdminConsentLogPage } from '@/pages/AdminConsentLogPage'
 import { AdminDashboardPage } from '@/pages/AdminDashboardPage'
 import { AdminPurposesPage } from '@/pages/AdminPurposesPage'
 import { AdminWorkspacesPage } from '@/pages/AdminWorkspacesPage'
 import { DemoSitePage } from '@/pages/DemoSitePage'
+import { GrievancePortalPage } from '@/pages/GrievancePortalPage'
 import { LandingPage } from '@/pages/LandingPage'
 import { PrivacyPolicyPage } from '@/pages/PrivacyPolicyPage'
 import { RightsPortalPage } from '@/pages/RightsPortalPage'
@@ -35,6 +37,7 @@ export default function App() {
           <Route path="/privacy" element={<PrivacyPolicyPage />} />
           <Route path="/demo" element={<DemoSitePage />} />
           <Route path="/rights" element={<RightsPortalPage />} />
+          <Route path="/grievance" element={<GrievancePortalPage />} />
           <Route path="/admin/login" element={<LoginPage />} />
           <Route
             path="/admin"
@@ -73,6 +76,14 @@ export default function App() {
             element={
               <AdminRoute>
                 <AdminAssetsPage />
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="/admin/cases"
+            element={
+              <AdminRoute>
+                <AdminCasesPage />
               </AdminRoute>
             }
           />

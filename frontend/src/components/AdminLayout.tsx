@@ -9,6 +9,7 @@ import { Button } from './ui/Button'
 
 const NAV_ITEMS = [
   { to: '/admin', label: 'DSAR Queue' },
+  { to: '/admin/cases', label: 'Cases' },
   { to: '/admin/purposes', label: 'Purposes' },
   { to: '/admin/consent-log', label: 'Consent Log' },
   { to: '/admin/workspaces', label: 'Workspaces' },
