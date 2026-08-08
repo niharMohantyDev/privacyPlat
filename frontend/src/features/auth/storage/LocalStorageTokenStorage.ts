@@ -11,6 +11,10 @@ export class LocalStorageTokenStorage implements TokenStorage {
     return localStorage.getItem(ACCESS_TOKEN_KEY)
   }
 
+  getRefreshToken(): string | null {
+    return localStorage.getItem(REFRESH_TOKEN_KEY)
+  }
+
   save(tokens: AuthTokens): void {
     localStorage.setItem(ACCESS_TOKEN_KEY, tokens.access)
     localStorage.setItem(REFRESH_TOKEN_KEY, tokens.refresh)

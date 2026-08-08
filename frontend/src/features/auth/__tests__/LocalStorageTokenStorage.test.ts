@@ -29,4 +29,14 @@ describe('LocalStorageTokenStorage', () => {
     expect(storage.getAccessToken()).toBeNull()
     expect(localStorage.getItem('refresh_token')).toBeNull()
   })
+
+  it('save() then getRefreshToken() round-trips the refresh token', () => {
+    const storage = new LocalStorageTokenStorage()
+    storage.save({ access: 'a1', refresh: 'r1' })
+    expect(storage.getRefreshToken()).toBe('r1')
+  })
+
+  it('returns null for getRefreshToken() when no token is stored', () => {
+    expect(new LocalStorageTokenStorage().getRefreshToken()).toBeNull()
+  })
 })

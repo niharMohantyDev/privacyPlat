@@ -27,4 +27,5 @@ urlpatterns = [
     path("api/consent/", include("apps.consent.urls")),
     path("api/rights/", include("apps.rights.urls")),
     path("api/", include("apps.cases.urls")),
+    path("api/", include("apps.dashboard.urls")),
 ]

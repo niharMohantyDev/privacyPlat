@@ -9,6 +9,7 @@ import { AdminCasesPage } from '@/pages/AdminCasesPage'
 import { AdminConsentLogPage } from '@/pages/AdminConsentLogPage'
 import { AdminDashboardPage } from '@/pages/AdminDashboardPage'
 import { AdminPurposesPage } from '@/pages/AdminPurposesPage'
+import { AdminRequestsPage } from '@/pages/AdminRequestsPage'
 import { AdminWorkspacesPage } from '@/pages/AdminWorkspacesPage'
 import { DemoSitePage } from '@/pages/DemoSitePage'
 import { GrievancePortalPage } from '@/pages/GrievancePortalPage'
@@ -44,6 +45,14 @@ export default function App() {
             element={
               <AdminRoute>
                 <AdminDashboardPage />
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="/admin/requests"
+            element={
+              <AdminRoute>
+                <AdminRequestsPage />
               </AdminRoute>
             }
           />

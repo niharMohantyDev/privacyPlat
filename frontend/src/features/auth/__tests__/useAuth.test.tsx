@@ -10,6 +10,7 @@ function fakeStorage(): TokenStorage {
   let tokens: AuthTokens | null = null
   return {
     getAccessToken: () => tokens?.access ?? null,
+    getRefreshToken: () => tokens?.refresh ?? null,
     save: (t) => {
       tokens = t
     },
@@ -28,6 +29,7 @@ describe('useAuth', () => {
   it('starts unauthenticated, becomes authenticated after a successful login', async () => {
     const client: IAuthApiClient = {
       login: vi.fn().mockResolvedValue({ access: 'a', refresh: 'r' }),
+      refresh: vi.fn(),
     }
     const storage = fakeStorage()
 
@@ -43,7 +45,10 @@ describe('useAuth', () => {
   })
 
   it('logout() clears the token and flips isAuthenticated back to false', async () => {
-    const client: IAuthApiClient = { login: vi.fn().mockResolvedValue({ access: 'a', refresh: 'r' }) }
+    const client: IAuthApiClient = {
+      login: vi.fn().mockResolvedValue({ access: 'a', refresh: 'r' }),
+      refresh: vi.fn(),
+    }
     const storage = fakeStorage()
 
     const { result } = renderHook(() => useAuth({ client, storage }), { wrapper })
