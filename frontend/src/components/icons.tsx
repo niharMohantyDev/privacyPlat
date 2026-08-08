@@ -139,6 +139,25 @@ export function UsersIcon(props: IconProps) {
   )
 }
 
+export function MegaphoneIcon(props: IconProps) {
+  return (
+    <svg {...BASE_PROPS} {...props}>
+      <path d="M3.5 10.5v3a1.5 1.5 0 0 0 1.5 1.5h1l1.2 4.2a1 1 0 0 0 1 .8h1a1 1 0 0 0 1-1.25L8.3 15h.2l9.5 4V7.5l-9.5 4H5a1.5 1.5 0 0 0-1.5 1.5Z" />
+      <path d="M18 9.5a3 3 0 0 1 0 6" />
+    </svg>
+  )
+}
+
+export function ArchiveIcon(props: IconProps) {
+  return (
+    <svg {...BASE_PROPS} {...props}>
+      <rect x="3.5" y="4" width="17" height="4.5" rx="1" />
+      <path d="M5 8.5V18a1.5 1.5 0 0 0 1.5 1.5h11A1.5 1.5 0 0 0 19 18V8.5" />
+      <path d="M10 13h4" />
+    </svg>
+  )
+}
+
 export function PencilIcon(props: IconProps) {
   return (
     <svg {...BASE_PROPS} {...props}>
