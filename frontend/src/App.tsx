@@ -10,6 +10,7 @@ import { AdminConsentLogPage } from '@/pages/AdminConsentLogPage'
 import { AdminDashboardPage } from '@/pages/AdminDashboardPage'
 import { AdminPurposesPage } from '@/pages/AdminPurposesPage'
 import { AdminRequestsPage } from '@/pages/AdminRequestsPage'
+import { AdminRopaPage } from '@/pages/AdminRopaPage'
 import { AdminWorkspacesPage } from '@/pages/AdminWorkspacesPage'
 import { DemoSitePage } from '@/pages/DemoSitePage'
 import { GrievancePortalPage } from '@/pages/GrievancePortalPage'
@@ -93,6 +94,14 @@ export default function App() {
             element={
               <AdminRoute>
                 <AdminCasesPage />
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="/admin/ropa"
+            element={
+              <AdminRoute>
+                <AdminRopaPage />
               </AdminRoute>
             }
           />

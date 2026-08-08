@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "apps.rights",
     "apps.cases",
     "apps.dashboard",
+    "apps.ropa",
 ]
 
 MIDDLEWARE = [

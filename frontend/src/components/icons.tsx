@@ -91,6 +91,15 @@ export function GlobeIcon(props: IconProps) {
   )
 }
 
+export function BookIcon(props: IconProps) {
+  return (
+    <svg {...BASE_PROPS} {...props}>
+      <path d="M4 5.5c0-1.1.9-2 2-2h6v15H6c-1.1 0-2 .9-2 2Z" />
+      <path d="M12 3.5h6c1.1 0 2 .9 2 2V19H6c-1.1 0-2 .9-2 2" />
+    </svg>
+  )
+}
+
 export function ClockIcon(props: IconProps) {
   return (
     <svg {...BASE_PROPS} {...props}>
