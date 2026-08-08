@@ -4,9 +4,11 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { AdminLayout } from '@/components/AdminLayout'
 import { LoginPage } from '@/features/auth/components/LoginPage'
 import { RequireAuth } from '@/features/auth/components/RequireAuth'
+import { AdminAssetsPage } from '@/pages/AdminAssetsPage'
 import { AdminConsentLogPage } from '@/pages/AdminConsentLogPage'
 import { AdminDashboardPage } from '@/pages/AdminDashboardPage'
 import { AdminPurposesPage } from '@/pages/AdminPurposesPage'
+import { AdminWorkspacesPage } from '@/pages/AdminWorkspacesPage'
 import { DemoSitePage } from '@/pages/DemoSitePage'
 import { HomePage } from '@/pages/HomePage'
 import { RightsPortalPage } from '@/pages/RightsPortalPage'
@@ -51,6 +53,22 @@ export default function App() {
             element={
               <AdminRoute>
                 <AdminConsentLogPage />
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="/admin/workspaces"
+            element={
+              <AdminRoute>
+                <AdminWorkspacesPage />
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="/admin/assets"
+            element={
+              <AdminRoute>
+                <AdminAssetsPage />
               </AdminRoute>
             }
           />
