@@ -16,7 +16,7 @@ export function AssetTable({ assets, onEdit, onDelete, onToggleActive }: AssetTa
   return (
     <table className="w-full text-left text-sm">
       <thead>
-        <tr className="border-b border-neutral-200 text-xs uppercase text-neutral-500 dark:border-neutral-800">
+        <tr className="border-b border-neutral-200 text-xs uppercase text-neutral-500">
           <th className="py-2 pr-4">Name</th>
           <th className="py-2 pr-4">Type</th>
           <th className="py-2 pr-4">Public key</th>
@@ -26,13 +26,11 @@ export function AssetTable({ assets, onEdit, onDelete, onToggleActive }: AssetTa
       </thead>
       <tbody>
         {assets.map((asset) => (
-          <tr key={asset.id} className="border-b border-neutral-100 dark:border-neutral-900">
+          <tr key={asset.id} className="border-b border-neutral-100">
             <td className="py-2 pr-4">{asset.name}</td>
             <td className="py-2 pr-4">{asset.asset_type.replace('_', ' ')}</td>
             <td className="py-2 pr-4">
-              <code className="rounded bg-neutral-100 px-1.5 py-0.5 text-xs dark:bg-neutral-800">
-                {asset.public_key}
-              </code>
+              <code className="rounded bg-neutral-100 px-1.5 py-0.5 text-xs">{asset.public_key}</code>
             </td>
             <td className="py-2 pr-4">
               <button
@@ -40,8 +38,8 @@ export function AssetTable({ assets, onEdit, onDelete, onToggleActive }: AssetTa
                 onClick={() => onToggleActive(asset)}
                 className={
                   asset.is_active
-                    ? 'rounded-full bg-green-100 px-2 py-0.5 text-xs text-green-800 dark:bg-green-900 dark:text-green-200'
-                    : 'rounded-full bg-neutral-100 px-2 py-0.5 text-xs text-neutral-600 dark:bg-neutral-800 dark:text-neutral-400'
+                    ? 'rounded-full bg-green-100 px-2 py-0.5 text-xs text-green-800'
+                    : 'rounded-full bg-neutral-100 px-2 py-0.5 text-xs text-neutral-600'
                 }
               >
                 {asset.is_active ? 'Active' : 'Revoked'}

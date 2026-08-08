@@ -24,7 +24,7 @@ export function DSARRequestForm({ onSubmit, isSubmitting, errorMessage }: DSARRe
   return (
     <form onSubmit={handleSubmit} className="mx-auto max-w-md space-y-4">
       <div>
-        <label htmlFor="subject-key" className="block text-sm font-medium text-neutral-700 dark:text-neutral-200">
+        <label htmlFor="subject-key" className="block text-sm font-medium text-neutral-700">
           Your email address
         </label>
         <input
@@ -34,19 +34,19 @@ export function DSARRequestForm({ onSubmit, isSubmitting, errorMessage }: DSARRe
           value={subjectKey}
           onChange={(e) => setSubjectKey(e.target.value)}
           placeholder="you@example.com"
-          className="mt-1 w-full rounded-md border border-neutral-300 px-3 py-2 text-sm dark:border-neutral-700 dark:bg-neutral-900"
+          className="mt-1 w-full rounded-md border border-neutral-300 px-3 py-2 text-sm"
         />
       </div>
 
       <div>
-        <label htmlFor="request-type" className="block text-sm font-medium text-neutral-700 dark:text-neutral-200">
+        <label htmlFor="request-type" className="block text-sm font-medium text-neutral-700">
           What would you like to do?
         </label>
         <select
           id="request-type"
           value={requestType}
           onChange={(e) => setRequestType(e.target.value as RequestType)}
-          className="mt-1 w-full rounded-md border border-neutral-300 px-3 py-2 text-sm dark:border-neutral-700 dark:bg-neutral-900"
+          className="mt-1 w-full rounded-md border border-neutral-300 px-3 py-2 text-sm"
         >
           {REQUEST_TYPES.map((option) => (
             <option key={option.value} value={option.value}>

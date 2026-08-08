@@ -15,7 +15,7 @@ export function DSARQueueTable({ requests, onTransition, isTransitioning }: DSAR
   return (
     <table className="w-full text-left text-sm">
       <thead>
-        <tr className="border-b border-neutral-200 text-xs uppercase text-neutral-500 dark:border-neutral-800">
+        <tr className="border-b border-neutral-200 text-xs uppercase text-neutral-500">
           <th className="py-2 pr-4">Subject</th>
           <th className="py-2 pr-4">Type</th>
           <th className="py-2 pr-4">Status</th>
@@ -25,15 +25,17 @@ export function DSARQueueTable({ requests, onTransition, isTransitioning }: DSAR
       </thead>
       <tbody>
         {requests.map((request) => (
-          <tr key={request.id} className="border-b border-neutral-100 dark:border-neutral-900">
+          <tr key={request.id} className="border-b border-neutral-100">
             <td className="py-2 pr-4">{request.subject_key}</td>
             <td className="py-2 pr-4">{request.request_type.replace('_', ' ')}</td>
             <td className="py-2 pr-4">
-              <span className="rounded-full bg-neutral-100 px-2 py-0.5 text-xs dark:bg-neutral-800">
+              <span className="rounded-full bg-neutral-100 px-2 py-0.5 text-xs">
                 {request.status.replace('_', ' ')}
               </span>
             </td>
-            <td className="py-2 pr-4">{request.due_at ? new Date(request.due_at).toLocaleDateString() : '—'}</td>
+            <td className="py-2 pr-4">
+              {request.due_at ? new Date(request.due_at).toLocaleDateString() : '—'}
+            </td>
             <td className="py-2">
               <select
                 aria-label={`Change status for ${request.subject_key}`}
@@ -43,7 +45,7 @@ export function DSARQueueTable({ requests, onTransition, isTransitioning }: DSAR
                   if (e.target.value) onTransition(request.id, e.target.value)
                   e.target.value = ''
                 }}
-                className="rounded-md border border-neutral-300 px-2 py-1 text-xs dark:border-neutral-700 dark:bg-neutral-900"
+                className="rounded-md border border-neutral-300 px-2 py-1 text-xs"
               >
                 <option value="" disabled>
                   Change status…

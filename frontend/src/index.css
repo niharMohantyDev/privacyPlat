@@ -1,1 +1,8 @@
 @import "tailwindcss";
+
+:root {
+  /* Force light mode regardless of OS/browser preference — native form
+     controls (select, checkbox, scrollbars) otherwise still render dark
+     even when every Tailwind class in the app is light-mode-only. */
+  color-scheme: light;
+}

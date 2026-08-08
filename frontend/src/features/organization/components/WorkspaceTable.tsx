@@ -15,7 +15,7 @@ export function WorkspaceTable({ workspaces, onEdit, onDelete }: WorkspaceTableP
   return (
     <table className="w-full text-left text-sm">
       <thead>
-        <tr className="border-b border-neutral-200 text-xs uppercase text-neutral-500 dark:border-neutral-800">
+        <tr className="border-b border-neutral-200 text-xs uppercase text-neutral-500">
           <th className="py-2 pr-4">Name</th>
           <th className="py-2 pr-4">Slug</th>
           <th className="py-2">Actions</th>
@@ -23,11 +23,15 @@ export function WorkspaceTable({ workspaces, onEdit, onDelete }: WorkspaceTableP
       </thead>
       <tbody>
         {workspaces.map((workspace) => (
-          <tr key={workspace.id} className="border-b border-neutral-100 dark:border-neutral-900">
+          <tr key={workspace.id} className="border-b border-neutral-100">
             <td className="py-2 pr-4">{workspace.name}</td>
             <td className="py-2 pr-4 font-mono text-xs">{workspace.slug}</td>
             <td className="py-2">
-              <button type="button" onClick={() => onEdit(workspace)} className="mr-3 text-blue-600 underline">
+              <button
+                type="button"
+                onClick={() => onEdit(workspace)}
+                className="mr-3 text-blue-600 underline"
+              >
                 Edit
               </button>
               <button type="button" onClick={() => onDelete(workspace.id)} className="text-red-600 underline">

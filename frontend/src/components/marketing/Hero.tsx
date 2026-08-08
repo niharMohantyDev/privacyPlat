@@ -8,17 +8,17 @@ export function Hero() {
         aria-hidden="true"
         className="absolute inset-x-0 -top-40 -z-10 flex justify-center overflow-hidden blur-3xl"
       >
-        <div className="aspect-square w-[50rem] rounded-full bg-gradient-to-tr from-indigo-200 to-sky-100 opacity-50 dark:from-indigo-950 dark:to-sky-950" />
+        <div className="aspect-square w-[50rem] rounded-full bg-gradient-to-tr from-indigo-200 to-sky-100 opacity-50" />
       </div>
 
       <div className="mx-auto max-w-4xl px-6 py-24 text-center sm:py-32">
-        <span className="inline-flex items-center rounded-full border border-indigo-200 bg-indigo-50 px-3 py-1 text-xs font-medium text-indigo-700 dark:border-indigo-900 dark:bg-indigo-950 dark:text-indigo-300">
+        <span className="inline-flex items-center rounded-full border border-indigo-200 bg-indigo-50 px-3 py-1 text-xs font-medium text-indigo-700">
           Consent · Rights · Governance — one platform
         </span>
-        <h1 className="mt-6 text-4xl font-semibold tracking-tight text-neutral-900 sm:text-6xl dark:text-white">
-          Privacy compliance, <span className="text-indigo-600 dark:text-indigo-400">wired in.</span>
+        <h1 className="mt-6 text-4xl font-semibold tracking-tight text-neutral-900 sm:text-6xl">
+          Privacy compliance, <span className="text-indigo-600">wired in.</span>
         </h1>
-        <p className="mx-auto mt-6 max-w-2xl text-lg text-neutral-600 dark:text-neutral-300">{APP_DESCRIPTION}</p>
+        <p className="mx-auto mt-6 max-w-2xl text-lg text-neutral-600">{APP_DESCRIPTION}</p>
         <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
           <LinkButton to="/demo" size="lg">
             View live demo

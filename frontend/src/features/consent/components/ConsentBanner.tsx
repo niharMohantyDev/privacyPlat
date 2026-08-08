@@ -14,15 +14,15 @@ export function ConsentBanner({ onAcceptAll, onRejectAll, onManage, isSubmitting
     <div
       role="dialog"
       aria-label="Cookie consent"
-      className="fixed inset-x-0 bottom-0 z-50 border-t border-neutral-200 bg-white p-4 shadow-lg dark:border-neutral-800 dark:bg-neutral-900"
+      className="fixed inset-x-0 bottom-0 z-50 border-t border-neutral-200 bg-white p-4 shadow-lg"
     >
       <div className="mx-auto flex max-w-4xl flex-col items-start gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <p className="text-sm text-neutral-600 dark:text-neutral-300">
-            We use cookies for essential site functionality and, with your permission, for
-            analytics, marketing, and personalization. You can change your choice anytime.
+          <p className="text-sm text-neutral-600">
+            We use cookies for essential site functionality and, with your permission, for analytics,
+            marketing, and personalization. You can change your choice anytime.
           </p>
-          <p className="mt-1 text-xs text-neutral-400 dark:text-neutral-500">Powered by {APP_NAME}</p>
+          <p className="mt-1 text-xs text-neutral-400">Powered by {APP_NAME}</p>
         </div>
         <div className="flex shrink-0 gap-2">
           <Button variant="outline" size="sm" onClick={onManage} disabled={isSubmitting}>

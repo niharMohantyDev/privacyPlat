@@ -9,7 +9,7 @@ interface LoginFormProps {
 }
 
 const INPUT_CLASSES =
-  'mt-1 w-full rounded-md border border-neutral-300 px-3 py-2 text-sm outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 dark:border-neutral-700 dark:bg-neutral-900'
+  'mt-1 w-full rounded-md border border-neutral-300 px-3 py-2 text-sm outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500'
 
 /** Presentational only — see apps/consent's ConsentBanner for the same convention. */
 export function LoginForm({ onSubmit, isSubmitting, errorMessage }: LoginFormProps) {
@@ -25,7 +25,7 @@ export function LoginForm({ onSubmit, isSubmitting, errorMessage }: LoginFormPro
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
-        <label htmlFor="login-email" className="block text-sm font-medium text-neutral-700 dark:text-neutral-200">
+        <label htmlFor="login-email" className="block text-sm font-medium text-neutral-700">
           Email
         </label>
         <input
@@ -38,7 +38,7 @@ export function LoginForm({ onSubmit, isSubmitting, errorMessage }: LoginFormPro
         />
       </div>
       <div>
-        <label htmlFor="login-password" className="block text-sm font-medium text-neutral-700 dark:text-neutral-200">
+        <label htmlFor="login-password" className="block text-sm font-medium text-neutral-700">
           Password
         </label>
         <input

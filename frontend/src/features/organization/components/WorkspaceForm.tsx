@@ -33,22 +33,22 @@ export function WorkspaceForm({ editingWorkspace, onSubmit, onCancel, isSubmitti
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-3 rounded-md border border-neutral-200 p-4 dark:border-neutral-800">
+    <form onSubmit={handleSubmit} className="space-y-3 rounded-md border border-neutral-200 p-4">
       <h2 className="text-sm font-semibold">{editingWorkspace ? 'Edit workspace' : 'New workspace'}</h2>
       <div className="grid grid-cols-2 gap-3">
         <div>
-          <label htmlFor="workspace-name" className="block text-xs font-medium text-neutral-600 dark:text-neutral-300">
+          <label htmlFor="workspace-name" className="block text-xs font-medium text-neutral-600">
             Name
           </label>
           <input
             id="workspace-name"
             value={values.name}
             onChange={(e) => setValues((v) => ({ ...v, name: e.target.value }))}
-            className="mt-1 w-full rounded-md border border-neutral-300 px-2 py-1 text-sm dark:border-neutral-700 dark:bg-neutral-900"
+            className="mt-1 w-full rounded-md border border-neutral-300 px-2 py-1 text-sm"
           />
         </div>
         <div>
-          <label htmlFor="workspace-slug" className="block text-xs font-medium text-neutral-600 dark:text-neutral-300">
+          <label htmlFor="workspace-slug" className="block text-xs font-medium text-neutral-600">
             Slug
           </label>
           <input
@@ -56,7 +56,7 @@ export function WorkspaceForm({ editingWorkspace, onSubmit, onCancel, isSubmitti
             value={values.slug}
             disabled={Boolean(editingWorkspace)}
             onChange={(e) => setValues((v) => ({ ...v, slug: e.target.value }))}
-            className="mt-1 w-full rounded-md border border-neutral-300 px-2 py-1 text-sm disabled:bg-neutral-100 dark:border-neutral-700 dark:bg-neutral-900 dark:disabled:bg-neutral-800"
+            className="mt-1 w-full rounded-md border border-neutral-300 px-2 py-1 text-sm disabled:bg-neutral-100"
           />
         </div>
       </div>

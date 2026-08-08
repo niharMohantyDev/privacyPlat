@@ -24,8 +24,8 @@ export function AdminLayout({ children }: AdminLayoutProps) {
   const location = useLocation()
 
   return (
-    <div className="min-h-screen bg-neutral-50 dark:bg-neutral-950">
-      <nav className="border-b border-neutral-200 bg-white dark:border-neutral-800 dark:bg-neutral-900">
+    <div className="min-h-screen bg-neutral-50">
+      <nav className="border-b border-neutral-200 bg-white">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-8 py-3">
           <div className="flex items-center gap-8">
             <Logo size="sm" to="/admin" />
@@ -36,8 +36,8 @@ export function AdminLayout({ children }: AdminLayoutProps) {
                   to={item.to}
                   className={
                     location.pathname === item.to
-                      ? 'border-b-2 border-indigo-600 py-1 text-sm font-semibold text-neutral-900 dark:text-white'
-                      : 'border-b-2 border-transparent py-1 text-sm text-neutral-500 hover:text-neutral-900 dark:hover:text-white'
+                      ? 'border-b-2 border-indigo-600 py-1 text-sm font-semibold text-neutral-900'
+                      : 'border-b-2 border-transparent py-1 text-sm text-neutral-500 hover:text-neutral-900'
                   }
                 >
                   {item.label}

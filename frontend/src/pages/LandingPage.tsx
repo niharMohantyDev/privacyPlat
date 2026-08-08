@@ -8,7 +8,7 @@ import { TestimonialCarousel } from '@/components/marketing/TestimonialCarousel'
 
 export function LandingPage() {
   return (
-    <div className="min-h-screen bg-white dark:bg-neutral-950">
+    <div className="min-h-screen bg-white">
       <MarketingHeader />
       <main>
         <Hero />

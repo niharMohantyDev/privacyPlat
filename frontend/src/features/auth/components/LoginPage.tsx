@@ -20,11 +20,11 @@ export function LoginPage() {
   }
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-neutral-50 px-6 dark:bg-neutral-950">
+    <div className="flex min-h-screen flex-col items-center justify-center bg-neutral-50 px-6">
       <Logo size="lg" className="mb-8" />
       <Card className="w-full max-w-sm">
-        <h1 className="text-center text-lg font-semibold text-neutral-900 dark:text-white">Staff sign in</h1>
-        <p className="mt-1 text-center text-sm text-neutral-500 dark:text-neutral-400">
+        <h1 className="text-center text-lg font-semibold text-neutral-900">Staff sign in</h1>
+        <p className="mt-1 text-center text-sm text-neutral-500">
           Sign in to manage consent, requests, and your workspace.
         </p>
         <div className="mt-6">
@@ -35,10 +35,7 @@ export function LoginPage() {
           />
         </div>
       </Card>
-      <Link
-        to="/"
-        className="mt-8 text-sm text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white"
-      >
+      <Link to="/" className="mt-8 text-sm text-neutral-500 hover:text-neutral-900">
         ← Back to home
       </Link>
     </div>

@@ -15,7 +15,7 @@ export function PurposeTable({ purposes, onEdit, onDelete }: PurposeTableProps) 
   return (
     <table className="w-full text-left text-sm">
       <thead>
-        <tr className="border-b border-neutral-200 text-xs uppercase text-neutral-500 dark:border-neutral-800">
+        <tr className="border-b border-neutral-200 text-xs uppercase text-neutral-500">
           <th className="py-2 pr-4">Code</th>
           <th className="py-2 pr-4">Name</th>
           <th className="py-2 pr-4">Essential</th>
@@ -24,7 +24,7 @@ export function PurposeTable({ purposes, onEdit, onDelete }: PurposeTableProps) 
       </thead>
       <tbody>
         {purposes.map((purpose) => (
-          <tr key={purpose.id} className="border-b border-neutral-100 dark:border-neutral-900">
+          <tr key={purpose.id} className="border-b border-neutral-100">
             <td className="py-2 pr-4 font-mono text-xs">{purpose.code}</td>
             <td className="py-2 pr-4">{purpose.name}</td>
             <td className="py-2 pr-4">{purpose.is_essential ? 'Yes' : 'No'}</td>
