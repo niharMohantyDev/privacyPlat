@@ -30,6 +30,24 @@ class DSARRequestListView(APIView):
         return Response(DSARRequestSerializer(requests, many=True).data)
 
 
+class DSARRequestDetailView(APIView):
+    """Fetch a single request. Reads: any org member."""
+
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, request_id):
+        organization_id = request.query_params.get("organization_id")
+        if not organization_id:
+            raise ValidationError({"organization_id": "This query parameter is required."})
+        require_membership(request.user, organization_id)
+
+        service = build_dsar_service()
+        found = service.get_request(organization_id=organization_id, request_id=request_id)
+        if found is None:
+            raise NotFound("DSAR request not found.")
+        return Response(DSARRequestSerializer(found).data)
+
+
 class DSARRequestSubmitView(APIView):
     """
     Platform-authenticated submission — for staff logging a request

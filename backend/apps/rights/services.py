@@ -115,3 +115,8 @@ class DSARService:
 
     def list_requests(self, *, organization_id: uuid.UUID) -> list[DSARRequestEntity]:
         return self._repository.list_for_organization(organization_id)
+
+    def get_request(
+        self, *, organization_id: uuid.UUID, request_id: uuid.UUID
+    ) -> DSARRequestEntity | None:
+        return self._repository.get(organization_id, request_id)

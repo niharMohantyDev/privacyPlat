@@ -67,6 +67,30 @@ def test_viewer_can_list_requests(org_and_users):
     assert len(response.json()) == 1
 
 
+def test_viewer_can_fetch_a_single_request_detail(org_and_users):
+    org, viewer = org_and_users["org"], org_and_users["viewer"]
+    request_obj = DSARRequest.objects.create(
+        organization=org, subject_key="alice@example.com", request_type="access", region="DE"
+    )
+    client = _client_for(viewer)
+
+    response = client.get(f"/api/rights/requests/{request_obj.id}/?organization_id={org.id}")
+    assert response.status_code == 200
+    assert response.json()["subject_key"] == "alice@example.com"
+
+
+def test_detail_view_404s_for_a_request_belonging_to_another_org(org_and_users):
+    org, admin = org_and_users["org"], org_and_users["admin"]
+    other_org = Organization.objects.create(name="Other", slug="other")
+    other_request = DSARRequest.objects.create(
+        organization=other_org, subject_key="mallory@example.com", request_type="access", region="DE"
+    )
+    client = _client_for(admin)
+
+    response = client.get(f"/api/rights/requests/{other_request.id}/?organization_id={org.id}")
+    assert response.status_code == 404
+
+
 def test_invalid_transition_returns_400(org_and_users):
     org, admin = org_and_users["org"], org_and_users["admin"]
     request = DSARRequest.objects.create(
